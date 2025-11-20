@@ -1,6 +1,6 @@
 import './NavigationBar.css';
 
-const NavigationBar = ({ onNavigate }) => {
+const NavigationBar = ({ onNavigate, showLogo = true }) => {
   const handleNavClick = (e, page) => {
     e.preventDefault();
     if (onNavigate) {
@@ -11,10 +11,14 @@ const NavigationBar = ({ onNavigate }) => {
   return (
     <nav className="navigation-bar">
       <div className="nav-container">
-        <div className="nav-logo">
-          <div className="logo-icon">♦</div>
-          <a href="/" onClick={(e) => handleNavClick(e, 'home')}>Shyonara</a>
-        </div>
+        {showLogo ? (
+          <div className="nav-logo">
+            <div className="logo-icon">♦</div>
+            <a href="/" onClick={(e) => handleNavClick(e, 'home')}>Shyonara</a>
+          </div>
+        ) : (
+          <div className="nav-logo-placeholder" style={{ width: '150px' }}></div>
+        )}
 
         <div className="nav-menu-pill">
           <ul className="nav-links">

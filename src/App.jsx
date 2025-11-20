@@ -31,13 +31,14 @@ function App() {
 
   return (
     <div className="app">
-      <NavigationBar onNavigate={setCurrentPage} />
+      <NavigationBar onNavigate={setCurrentPage} showLogo={currentPage !== 'home'} />
       <HeroSection onNavigate={setCurrentPage} />
       <FeaturesSection />
       <AboutSection />
       <FeaturedProducts onProductClick={handleProductClick} />
       <CategoryShowcase onNavigate={setCurrentPage} />
       <LogoBar />
+      <Footer />
     </div>
   );
 }
