@@ -12,18 +12,18 @@ const NavigationBar = ({ onNavigate }) => {
     <nav className="navigation-bar">
       <div className="nav-container">
         <div className="nav-logo">
-          <a href="/" onClick={(e) => handleNavClick(e, 'home')}>LUXE</a>
+          <div className="logo-icon">♦</div>
+          <a href="/" onClick={(e) => handleNavClick(e, 'home')}>Shimmer</a>
         </div>
-        <ul className="nav-links">
-          <li><a href="#new-arrivals" onClick={(e) => handleNavClick(e, 'products')}>New Arrivals</a></li>
-          <li><a href="#collections" onClick={(e) => handleNavClick(e, 'products')}>Collections</a></li>
-          <li><a href="#rings" onClick={(e) => handleNavClick(e, 'products')}>Rings</a></li>
-          <li><a href="#necklaces" onClick={(e) => handleNavClick(e, 'products')}>Necklaces</a></li>
-          <li><a href="#about" onClick={(e) => handleNavClick(e, 'home')}>About Us</a></li>
-        </ul>
-        <div className="nav-icons">
-          <a href="#search">🔍</a>
-          <a href="#cart">🛍️</a>
+        
+        <div className="nav-menu-pill">
+          <ul className="nav-links">
+            <li className="active"><a href="#home" onClick={(e) => handleNavClick(e, 'home')}>Home</a></li>
+            <li><a href="#about" onClick={(e) => handleNavClick(e, 'home')}>About Us</a></li>
+            <li><a href="#collections" onClick={(e) => handleNavClick(e, 'products')}>Collections</a></li>
+            <li><a href="#pages">Pages <span className="dropdown-arrow">▼</span></a></li>
+          </ul>
+          <button className="contact-btn">Contact Us</button>
         </div>
       </div>
     </nav>

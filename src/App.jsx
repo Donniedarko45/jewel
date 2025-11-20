@@ -1,10 +1,11 @@
 import { useState } from 'react';
 import NavigationBar from './components/NavigationBar';
 import HeroSection from './components/HeroSection';
-import CategoryShowcase from './components/CategoryShowcase';
-import FeaturedProducts from './components/FeaturedProducts';
+import FeaturesSection from './components/FeaturesSection';
 import AboutSection from './components/AboutSection';
-import Testimonials from './components/Testimonials';
+import FeaturedProducts from './components/FeaturedProducts';
+import CategoryShowcase from './components/CategoryShowcase';
+import LogoBar from './components/LogoBar';
 import Footer from './components/Footer';
 import ProductListingPage from './pages/ProductListingPage';
 import ProductDetailPage from './pages/ProductDetailPage';
@@ -32,11 +33,11 @@ function App() {
     <div className="app">
       <NavigationBar onNavigate={setCurrentPage} />
       <HeroSection onNavigate={setCurrentPage} />
-      <CategoryShowcase onNavigate={setCurrentPage} />
-      <FeaturedProducts onProductClick={handleProductClick} />
+      <FeaturesSection />
       <AboutSection />
-      <Testimonials />
-      <Footer />
+      <FeaturedProducts onProductClick={handleProductClick} />
+      <CategoryShowcase onNavigate={setCurrentPage} />
+      <LogoBar />
     </div>
   );
 }

@@ -1,0 +1,46 @@
+.logo-bar {
+    background-color: #EFEBE9;
+    padding: 2rem 0;
+    border-top: 1px solid #D7CCC8;
+}
+
+.logo-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 var(--spacing-xl);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 2rem;
+}
+
+.logo-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    opacity: 0.6;
+    transition: opacity 0.3s ease;
+    cursor: pointer;
+}
+
+.logo-item:hover {
+    opacity: 1;
+}
+
+.logo-icon {
+    font-size: 1.5rem;
+    color: #3E2723;
+}
+
+.logo-text {
+    font-weight: 700;
+    font-size: 1.2rem;
+    color: #3E2723;
+}
+
+@media (max-width: 768px) {
+    .logo-container {
+        justify-content: center;
+    }
+}
