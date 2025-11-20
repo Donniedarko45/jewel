@@ -19,6 +19,20 @@ const HeroSection = ({ onNavigate }) => {
 
       <div className="hero-container">
         <div className="hero-glass-card">
+         
+
+          <div className="hero-navbar">
+            <div className="hero-nav-menu-pill">
+              <ul className="hero-nav-links">
+                <li className="active"><a href="#home" onClick={(e) => { e.preventDefault(); onNavigate('home'); }}>Home</a></li>
+                <li><a href="#about" onClick={(e) => { e.preventDefault(); }}>About Us</a></li>
+                <li><a href="#collections" onClick={(e) => { e.preventDefault(); onNavigate('products'); }}>Collections</a></li>
+                <li><a href="#pages">Pages <span className="dropdown-arrow">▼</span></a></li>
+              </ul>
+              <button className="hero-contact-btn">Contact Us</button>
+            </div>
+          </div>
+
           <div className="glass-content">
             <div className="brand-tag">
               <span className="brand-icon">♦</span> Shimmer
@@ -40,9 +54,8 @@ const HeroSection = ({ onNavigate }) => {
               </p>
             </div>
           </div>
-        </div>
 
-        <div className="hero-floating-elements">
+          <div className="hero-floating-elements">
             <div className="floating-card clients-card">
               <div className="client-avatars">
                 <img src="https://randomuser.me/api/portraits/women/1.jpg" alt="Client" />
@@ -64,6 +77,7 @@ const HeroSection = ({ onNavigate }) => {
               </div>
             </div>
           </div>
+        </div>
       </div>
     </section>
   );
