@@ -12,7 +12,7 @@ const HeroSection = ({ onNavigate }) => {
       <div className="hero-container">
         <div className="hero-content">
           <div className="brand-tag">
-            <span className="brand-icon">♦</span> Shimmer
+            <span className="brand-icon">♦</span> Shyonara
           </div>
           <h1 className="hero-headline">Our Luxury<br />Collections</h1>
 
@@ -24,7 +24,7 @@ const HeroSection = ({ onNavigate }) => {
           </div>
 
           <div className="hero-description">
-            <p className="desc-title"># Shimmer Jewelry Store</p>
+            <p className="desc-title"># Shyonara Jewelry Store</p>
             <p className="desc-text">
               Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut elit tellus, luctus nec ullamcorper mattis, pulvinar dapibus leo.
             </p>

@@ -13,9 +13,9 @@ const NavigationBar = ({ onNavigate }) => {
       <div className="nav-container">
         <div className="nav-logo">
           <div className="logo-icon">♦</div>
-          <a href="/" onClick={(e) => handleNavClick(e, 'home')}>Shimmer</a>
+          <a href="/" onClick={(e) => handleNavClick(e, 'home')}>Shyonara</a>
         </div>
-        
+
         <div className="nav-menu-pill">
           <ul className="nav-links">
             <li className="active"><a href="#home" onClick={(e) => handleNavClick(e, 'home')}>Home</a></li>
