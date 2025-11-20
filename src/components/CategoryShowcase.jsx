@@ -48,7 +48,11 @@ const CategoryShowcase = ({ onNavigate }) => {
                     <img src={category.image} alt={category.name} />
                   </div>
                   <span className="circle-name">{category.name}</span>
-                  <span className="circle-arrow">↓</span>
+                  <button className="circle-arrow">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M12 5v14M19 12l-7 7-7-7" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                    </svg>
+                  </button>
                 </div>
               ))}
             </div>

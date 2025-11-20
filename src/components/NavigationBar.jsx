@@ -14,7 +14,7 @@ const NavigationBar = ({ onNavigate, showLogo = true }) => {
         {showLogo ? (
           <div className="nav-logo">
             <div className="logo-icon">♦</div>
-            <a href="/" onClick={(e) => handleNavClick(e, 'home')}>Shyonara</a>
+            <a href="/" onClick={(e) => handleNavClick(e, 'home')}>Shimmer</a>
           </div>
         ) : (
           <div className="nav-logo-placeholder" style={{ width: '150px' }}></div>

@@ -1,7 +1,7 @@
 .logo-bar {
-    background-color: #EFEBE9;
-    padding: 2rem 0;
-    border-top: 1px solid #D7CCC8;
+    background-color: var(--primary-bg);
+    padding: 3rem 0;
+    border-top: 1px solid rgba(0, 0, 0, 0.06);
 }
 
 .logo-container {
@@ -12,14 +12,14 @@
     justify-content: space-between;
     align-items: center;
     flex-wrap: wrap;
-    gap: 2rem;
+    gap: 3rem;
 }
 
 .logo-item {
     display: flex;
     align-items: center;
     gap: 0.5rem;
-    opacity: 0.6;
+    opacity: 0.7;
     transition: opacity 0.3s ease;
     cursor: pointer;
 }
@@ -29,14 +29,55 @@
 }
 
 .logo-icon {
-    font-size: 1.5rem;
-    color: #3E2723;
+    font-size: 1.75rem;
+    color: var(--text-primary);
 }
 
 .logo-text {
     font-weight: 700;
+    font-size: 1.1rem;
+    color: var(--text-primary);
+    font-family: var(--font-body);
+}
+
+/* Variant styles */
+.logo-item.variant-1 .logo-icon {
+    font-size: 2rem;
+}
+
+.logo-item.variant-2 {
+    border: 2px solid var(--text-primary);
+    border-radius: 8px;
+    padding: 0.5rem 1rem;
+}
+
+.logo-item.variant-3 .logo-icon {
+    background: var(--text-primary);
+    color: white;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 4px;
     font-size: 1.2rem;
-    color: #3E2723;
+}
+
+.logo-item.variant-4 {
+    border-left: 3px solid var(--text-primary);
+    padding-left: 0.75rem;
+}
+
+.logo-item.variant-5 {
+    background: var(--accent-dark);
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+}
+
+.logo-item.variant-5 .logo-icon,
+.logo-item.variant-5 .logo-text {
+    color: white;
 }
 
 @media (max-width: 768px) {
