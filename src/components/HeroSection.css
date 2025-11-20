@@ -43,37 +43,124 @@
   height: 100%;
   display: flex;
   align-items: center;
+  justify-content: center;
   padding: 0 var(--spacing-xl);
 }
 
 /* Hero Content Card - Glass Effect */
 .hero-glass-card {
   position: relative;
-  width: 45%;
-  max-width: 580px;
-  min-width: 500px;
+  width: 90%;
+  max-width: 1200px;
+  min-width: 800px;
   background: rgba(139, 111, 91, 0.5);
   backdrop-filter: blur(25px);
   -webkit-backdrop-filter: blur(25px);
   border: 1.5px solid rgba(255, 255, 255, 0.2);
   border-radius: 24px;
-  padding: 3.5rem 3rem 3rem 3rem;
+  padding: 1.5rem 2rem 3rem 3rem;
   color: #fff;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: space-between;
   box-shadow: 0 12px 40px rgba(0, 0, 0, 0.2);
+  min-height: 540px;
+}
+
+/* Hero Navbar Inside Glass */
+.hero-navbar {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 1.5rem;
+}
+
+.hero-nav-menu-pill {
+  display: flex;
+  align-items: center;
+  background-color: rgba(255, 255, 255, 0.98);
+  backdrop-filter: blur(10px);
+  border-radius: var(--radius-full);
+  padding: 0.5rem 0.5rem 0.5rem 2rem;
+  gap: 2rem;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+}
+
+.hero-nav-links {
+  display: flex;
+  list-style: none;
+  gap: 2.25rem;
+  align-items: center;
+  margin: 0;
+  padding: 0;
+}
+
+.hero-nav-links li {
+  position: relative;
+}
+
+.hero-nav-links a {
+  font-family: var(--font-body);
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--text-primary);
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  letter-spacing: 0.01em;
+  transition: color var(--transition-base);
+}
+
+.hero-nav-links a:hover {
+  color: var(--accent-brown);
+}
+
+.hero-nav-links li.active a {
+  color: var(--text-primary);
+  font-weight: 600;
+}
+
+.hero-nav-links .dropdown-arrow {
+  font-size: 0.6rem;
+  opacity: 0.5;
+  transition: opacity var(--transition-base);
+}
+
+.hero-nav-links a:hover .dropdown-arrow {
+  opacity: 1;
+}
+
+.hero-contact-btn {
+  background-color: var(--accent-dark);
+  color: #FFFFFF;
+  border: none;
+  padding: 0.75rem 1.75rem;
+  border-radius: var(--radius-full);
+  font-family: var(--font-body);
+  font-weight: 500;
+  font-size: 0.875rem;
+  cursor: pointer;
+  transition: all var(--transition-base);
+  letter-spacing: 0;
+}
+
+.hero-contact-btn:hover {
+  background-color: var(--accent-brown);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(93, 74, 60, 0.3);
 }
 
 .back-arrow-btn {
   position: absolute;
-  top: -1.5rem;
-  left: -1.5rem;
-  background: rgba(209, 193, 179, 0.6);
+  top: 2rem;
+  left: -3rem;
+  background: rgba(209, 193, 179, 0.65);
   border: none;
   color: #2C2420;
-  width: 70px;
-  height: 70px;
+  width: 72px;
+  height: 72px;
   border-radius: 50%;
   display: flex;
   align-items: center;
@@ -82,23 +169,29 @@
   transition: all 0.3s ease;
   backdrop-filter: blur(10px);
   z-index: 10;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.18);
 }
 
 .back-arrow-btn:hover {
-  background: rgba(209, 193, 179, 0.8);
+  background: rgba(209, 193, 179, 0.85);
   transform: scale(1.05);
 }
 
 .back-arrow-btn svg {
-  width: 30px;
-  height: 30px;
+  width: 28px;
+  height: 28px;
   stroke-width: 2.5;
 }
 
 .glass-content {
   position: relative;
   z-index: 1;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 50%;
+  max-width: 550px;
 }
 
 .brand-tag {
@@ -108,8 +201,7 @@
   font-family: var(--font-heading);
   font-size: 1.125rem;
   font-weight: 400;
-  margin-bottom: 2rem;
-  margin-top: 0.5rem;
+  margin-bottom: 1.75rem;
   color: rgba(255, 255, 255, 0.95);
   letter-spacing: 0.02em;
 }
@@ -129,10 +221,10 @@
 
 .hero-headline {
   font-family: var(--font-heading);
-  font-size: clamp(3rem, 5vw, 4.25rem);
+  font-size: clamp(2.75rem, 5vw, 4rem);
   font-weight: 400;
-  line-height: 1.1;
-  margin-bottom: 2.25rem;
+  line-height: 1.15;
+  margin-bottom: 2rem;
   color: #fff;
   text-shadow: 0 2px 20px rgba(0, 0, 0, 0.2);
   letter-spacing: -0.01em;
@@ -142,7 +234,7 @@
   display: flex;
   align-items: center;
   gap: 1rem;
-  margin-bottom: 2.75rem;
+  margin-bottom: 2.5rem;
 }
 
 .hero-cta {
@@ -189,10 +281,10 @@
 }
 
 .hero-description {
-  max-width: 450px;
+  max-width: 480px;
   border-left: 2px solid rgba(255, 255, 255, 0.25);
   padding-left: 1.25rem;
-  margin-top: 1rem;
+  margin-top: 0.5rem;
 }
 
 .desc-title {
@@ -212,12 +304,12 @@
   letter-spacing: 0;
 }
 
-/* Floating Elements */
+/* Floating Elements - Inside Glass Container */
 .hero-floating-elements {
   position: absolute;
   top: 0;
   right: 0;
-  width: 54%;
+  width: 45%;
   height: 100%;
   pointer-events: none;
   z-index: 3;
@@ -236,8 +328,8 @@
 }
 
 .clients-card {
-  top: 30%;
-  right: 15%;
+  top: 25%;
+  right: 8%;
   display: flex;
   align-items: center;
   gap: 0.875rem;
@@ -299,8 +391,8 @@
 }
 
 .detail-card {
-  bottom: 25%;
-  right: 25%;
+  bottom: 20%;
+  right: 12%;
   display: flex;
   align-items: center;
   gap: 0.875rem;
@@ -344,17 +436,64 @@
   color: var(--accent-brown);
 }
 
-@media (max-width: 1024px) {
+@media (max-width: 1200px) {
   .hero-glass-card {
-    width: 80%;
+    width: 92%;
     min-width: auto;
     margin: 0 auto;
-    padding: 3rem 2.5rem;
+  }
+
+  .glass-content {
+    width: 48%;
+  }
+
+  .hero-floating-elements {
+    width: 48%;
+  }
+
+  .clients-card {
+    right: 5%;
+  }
+
+  .detail-card {
+    right: 8%;
+  }
+}
+
+@media (max-width: 1024px) {
+  .hero-glass-card {
+    width: 85%;
+    min-width: auto;
+    margin: 0 auto;
+    padding: 1.5rem 2rem 2.5rem 2.5rem;
+  }
+
+  .glass-content {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .hero-nav-menu-pill {
+    padding: 0.4rem 0.4rem 0.4rem 1.5rem;
+    gap: 1.5rem;
+  }
+
+  .hero-nav-links {
+    gap: 1.5rem;
+  }
+
+  .hero-nav-links a {
+    font-size: 0.8125rem;
+  }
+
+  .hero-contact-btn {
+    padding: 0.65rem 1.5rem;
+    font-size: 0.8125rem;
   }
 
   .back-arrow-btn {
-    top: -1rem;
-    left: -1rem;
+    top: 1.5rem;
+    left: -2rem;
     width: 60px;
     height: 60px;
   }
@@ -368,12 +507,39 @@
 @media (max-width: 768px) {
   .hero-glass-card {
     width: 90%;
-    padding: 2.5rem 2rem;
+    padding: 1.25rem 1.5rem 2rem 2rem;
+  }
+
+  .glass-content {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .hero-navbar {
+    margin-bottom: 0.75rem;
+  }
+
+  .hero-nav-menu-pill {
+    flex-direction: column;
+    padding: 1rem;
+    gap: 1rem;
+    width: 100%;
+  }
+
+  .hero-nav-links {
+    flex-direction: column;
+    gap: 0.75rem;
+    width: 100%;
+    text-align: center;
+  }
+
+  .hero-contact-btn {
+    width: 100%;
   }
 
   .back-arrow-btn {
-    top: -0.75rem;
-    left: -0.75rem;
+    top: 1rem;
+    left: -1.5rem;
     width: 55px;
     height: 55px;
   }
@@ -389,6 +555,6 @@
   
   .brand-tag {
     font-size: 1rem;
-    margin-bottom: 1.5rem;
+    margin-bottom: 1.25rem;
   }
 }

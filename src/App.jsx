@@ -31,7 +31,6 @@ function App() {
 
   return (
     <div className="app">
-      <NavigationBar onNavigate={setCurrentPage} showLogo={currentPage !== 'home'} />
       <HeroSection onNavigate={setCurrentPage} />
       <FeaturesSection />
       <AboutSection />
