@@ -1,24 +1,21 @@
 import './FeaturedProducts.css';
 
+import braceletImage from '../assets/bracelete.png';
+import pendantImage from '../assets/pendant.png';
+
 const FeaturedProducts = ({ onProductClick }) => {
   const products = [
     {
       id: 1,
-      title: 'Gold Earring',
+      title: 'Bracelet',
       price: '$240.00',
-      image: 'https://images.unsplash.com/photo-1635767798638-3e2523c96e14?w=500&q=80',
+      image: braceletImage,
     },
     {
       id: 2,
-      title: 'Diamond Ring',
+      title: 'Pendant',
       price: '$240.00',
-      image: 'https://images.unsplash.com/photo-1605100804763-247f67b3557e?w=500&q=80',
-    },
-    {
-      id: 3,
-      title: 'Gold Necklace',
-      price: '$240.00',
-      image: 'https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?w=500&q=80',
+      image: pendantImage,
     }
   ];
 
