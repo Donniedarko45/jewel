@@ -1,6 +1,6 @@
 .featured-products {
   padding: var(--spacing-3xl) 0;
-  background-color: var(--primary-bg);
+  background-color: #F5F1ED;
 }
 
 .featured-container {
@@ -22,26 +22,26 @@
 
 .featured-heading {
   font-family: var(--font-heading);
-  font-size: 3rem;
+  font-size: 2.5rem;
   font-weight: 400;
   color: var(--text-primary);
-  margin-bottom: 1.75rem;
-  line-height: 1.15;
-  letter-spacing: -0.02em;
+  margin-bottom: 1.5rem;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
 }
 
 .featured-desc {
-  font-size: 0.9375rem;
-  color: var(--text-muted);
-  line-height: 1.7;
-  margin-bottom: 2.5rem;
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+  line-height: 1.6;
+  margin-bottom: 2rem;
   font-weight: 400;
 }
 
 .see-more-btn {
   background: transparent;
-  border: 1.5px solid var(--border-light);
-  padding: 0.875rem 2.25rem;
+  border: 1.5px solid var(--text-primary);
+  padding: 0.75rem 2rem;
   border-radius: var(--radius-full);
   color: var(--text-primary);
   font-family: var(--font-body);
@@ -49,7 +49,7 @@
   font-weight: 500;
   cursor: pointer;
   transition: all var(--transition-base);
-  letter-spacing: 0.02em;
+  letter-spacing: 0;
 }
 
 .see-more-btn:hover {
@@ -57,7 +57,7 @@
   color: white;
   border-color: var(--accent-dark);
   transform: translateY(-2px);
-  box-shadow: var(--shadow-md);
+  box-shadow: 0 4px 12px rgba(93, 74, 60, 0.2);
 }
 
 .products-grid {
@@ -78,11 +78,11 @@
 
 .product-image {
   position: relative;
-  height: 280px;
-  border-radius: var(--radius-lg);
+  height: 240px;
+  border-radius: 16px;
   overflow: hidden;
-  margin-bottom: 1.25rem;
-  background: var(--secondary-bg);
+  margin-bottom: 1rem;
+  background: #FFFFFF;
 }
 
 .product-image img {
@@ -123,7 +123,8 @@
 }
 
 .add-to-cart-btn:hover {
-  background: var(--accent-gold);
+  background: var(--accent-brown);
+  color: white;
   transform: scale(1.1) translateY(0);
 }
 
@@ -134,18 +135,18 @@
 
 .product-name {
   font-family: var(--font-heading);
-  font-size: 1.25rem;
+  font-size: 1.125rem;
   font-weight: 500;
   color: var(--text-primary);
-  margin-bottom: 0.5rem;
-  letter-spacing: -0.01em;
+  margin-bottom: 0.375rem;
+  letter-spacing: 0;
 }
 
 .product-price {
   font-size: 1rem;
-  color: var(--accent-gold);
+  color: var(--text-primary);
   font-weight: 600;
-  letter-spacing: 0.01em;
+  letter-spacing: 0;
 }
 
 @media (max-width: 1024px) {

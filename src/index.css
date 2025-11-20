@@ -7,23 +7,23 @@
 }
 
 :root {
-  /* Premium Color Palette */
-  --primary-bg: #FDFBF7;
-  --secondary-bg: #F8F6F2;
-  --hero-bg: #1A1A1A;
+  /* Warm Elegant Color Palette */
+  --primary-bg: #F5F1ED;
+  --secondary-bg: #FFFFFF;
+  --hero-bg: #8B6F5B;
   --text-on-dark: #FFFFFF;
-  --text-primary: #1A1A1A;
-  --text-secondary: #4A4A4A;
-  --text-muted: #8B8B8B;
-  --accent-gold: #C9A961;
-  --accent-rose: #D4AF87;
-  --accent-dark: #2D2D2D;
-  --border-light: #E8E5E0;
-  --accent-cta: #C9A961;
+  --text-primary: #2C2420;
+  --text-secondary: #6B5D54;
+  --text-muted: #9B8B7E;
+  --accent-gold: #D4A574;
+  --accent-brown: #8B6F5B;
+  --accent-dark: #5D4A3C;
+  --border-light: #E5DDD5;
+  --accent-cta: #5D4A3C;
   
-  /* Premium Typography */
+  /* Elegant Typography */
   --font-heading: 'Cormorant Garamond', serif;
-  --font-body: 'Inter', sans-serif;
+  --font-body: 'Inter', -apple-system, sans-serif;
   
   /* Spacing System */
   --spacing-xs: 0.5rem;
@@ -57,13 +57,13 @@ body {
   margin: 0;
   font-family: var(--font-body);
   color: var(--text-primary);
-  background-color: var(--primary-bg);
+  background-color: #F5F1ED;
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   overflow-x: hidden;
   font-size: 16px;
-  letter-spacing: -0.01em;
+  letter-spacing: 0;
 }
 
 h1, h2, h3, h4, h5, h6 {

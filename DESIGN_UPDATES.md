@@ -1,13 +1,16 @@
-# Premium Design Updates - Jewelry Website
+# Warm Elegant Design - Jewelry Website
 
-## 🎨 Color Palette Transformation
+## 🎨 Color Palette (Matching Reference Design)
 
-### Before → After
-- **Primary Background**: `#F9F5F0` → `#FDFBF7` (Cleaner, more refined cream)
-- **Text Primary**: `#3E2723` → `#1A1A1A` (Modern charcoal black)
-- **Accent Color**: `#D7CCC8` → `#C9A961` (Luxurious gold)
-- **Hero Background**: `#8B6E5B` → `#1A1A1A` (Sophisticated dark)
-- **Footer**: `#2a2a2a` → `#1A1A1A` (Consistent dark theme)
+### Warm Brown Palette
+- **Primary Background**: `#F5F1ED` (Warm beige)
+- **Secondary Background**: `#FFFFFF` (Clean white)
+- **Hero Background**: `#8B6F5B` (Warm brown)
+- **Text Primary**: `#2C2420` (Rich dark brown)
+- **Text Secondary**: `#6B5D54` (Medium brown)
+- **Accent Brown**: `#8B6F5B` (Warm brown accent)
+- **Accent Dark**: `#5D4A3C` (Dark brown for CTAs)
+- **Footer**: `#E5DDD5` (Light warm beige)
 
 ## ✨ Typography Enhancements
 

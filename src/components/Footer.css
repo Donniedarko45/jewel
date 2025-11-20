@@ -1,6 +1,6 @@
 .footer {
-  background-color: #1A1A1A;
-  color: #E0E0E0;
+  background-color: #E5DDD5;
+  color: var(--text-primary);
   padding: var(--spacing-3xl) var(--spacing-lg) var(--spacing-lg);
 }
 
@@ -15,7 +15,7 @@
   gap: var(--spacing-3xl);
   margin-bottom: var(--spacing-3xl);
   padding-bottom: var(--spacing-3xl);
-  border-bottom: 1px solid rgba(201, 169, 97, 0.15);
+  border-bottom: 1px solid rgba(139, 111, 91, 0.2);
 }
 
 .footer-column {
@@ -26,20 +26,19 @@
 
 .footer-logo {
   font-family: var(--font-heading);
-  font-size: 2.25rem;
-  font-weight: 400;
-  letter-spacing: 0.1em;
-  color: var(--accent-gold);
+  font-size: 2rem;
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  color: var(--accent-brown);
   margin-bottom: var(--spacing-sm);
-  text-transform: uppercase;
 }
 
 .footer-description {
   font-size: 0.9375rem;
   line-height: 1.7;
-  color: #B0B0B0;
+  color: var(--text-secondary);
   margin-bottom: var(--spacing-md);
-  font-weight: 300;
+  font-weight: 400;
 }
 
 .footer-social {
@@ -53,27 +52,28 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: rgba(255, 255, 255, 0.06);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background-color: rgba(139, 111, 91, 0.1);
+  border: 1px solid rgba(139, 111, 91, 0.2);
   border-radius: 50%;
   font-size: 1.125rem;
   transition: all var(--transition-base);
 }
 
 .social-link:hover {
-  background-color: var(--accent-gold);
-  border-color: var(--accent-gold);
+  background-color: var(--accent-brown);
+  border-color: var(--accent-brown);
+  color: white;
   transform: translateY(-3px);
-  box-shadow: var(--shadow-md);
+  box-shadow: 0 4px 12px rgba(139, 111, 91, 0.3);
 }
 
 .footer-heading {
   font-family: var(--font-heading);
   font-size: 1.125rem;
   font-weight: 500;
-  color: white;
+  color: var(--text-primary);
   margin-bottom: var(--spacing-sm);
-  letter-spacing: 0.02em;
+  letter-spacing: 0;
 }
 
 .footer-links {
@@ -82,11 +82,11 @@
   margin: 0;
   display: flex;
   flex-direction: column;
-  gap: 0.75rem;
+  gap: 0.625rem;
 }
 
 .footer-links a {
-  color: #B0B0B0;
+  color: var(--text-secondary);
   font-size: 0.9375rem;
   font-weight: 400;
   transition: all var(--transition-base);
@@ -94,16 +94,16 @@
 }
 
 .footer-links a:hover {
-  color: var(--accent-gold);
-  transform: translateX(5px);
+  color: var(--accent-brown);
+  transform: translateX(3px);
 }
 
 .newsletter-text {
   font-size: 0.9375rem;
-  color: #B0B0B0;
+  color: var(--text-secondary);
   line-height: 1.6;
   margin: 0;
-  font-weight: 300;
+  font-weight: 400;
 }
 
 .newsletter-form {
@@ -114,10 +114,10 @@
 
 .newsletter-input {
   padding: 0.875rem 1.125rem;
-  background-color: rgba(255, 255, 255, 0.06);
-  border: 1px solid rgba(255, 255, 255, 0.12);
+  background-color: rgba(255, 255, 255, 0.5);
+  border: 1px solid rgba(139, 111, 91, 0.2);
   border-radius: var(--radius-md);
-  color: white;
+  color: var(--text-primary);
   font-family: var(--font-body);
   font-size: 0.9375rem;
   transition: all var(--transition-base);
@@ -125,32 +125,32 @@
 
 .newsletter-input:focus {
   outline: none;
-  border-color: var(--accent-gold);
-  background-color: rgba(255, 255, 255, 0.1);
+  border-color: var(--accent-brown);
+  background-color: rgba(255, 255, 255, 0.8);
 }
 
 .newsletter-input::placeholder {
-  color: #808080;
+  color: var(--text-muted);
 }
 
 .newsletter-button {
   padding: 0.875rem 1.125rem;
-  background-color: var(--accent-gold);
-  color: #1A1A1A;
+  background-color: var(--accent-dark);
+  color: #FFFFFF;
   border: none;
   border-radius: var(--radius-md);
   font-family: var(--font-body);
   font-size: 0.875rem;
-  font-weight: 600;
-  letter-spacing: 0.05em;
+  font-weight: 500;
+  letter-spacing: 0.02em;
   text-transform: uppercase;
   transition: all var(--transition-base);
 }
 
 .newsletter-button:hover {
-  background-color: #D4B574;
+  background-color: var(--accent-brown);
   transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(201, 169, 97, 0.3);
+  box-shadow: 0 6px 20px rgba(139, 111, 91, 0.3);
 }
 
 .footer-bottom {
@@ -163,7 +163,7 @@
 
 .footer-copyright {
   font-size: 0.875rem;
-  color: #808080;
+  color: var(--text-muted);
   margin: 0;
   font-weight: 400;
 }
@@ -175,13 +175,13 @@
 
 .footer-legal a {
   font-size: 0.875rem;
-  color: #808080;
+  color: var(--text-muted);
   font-weight: 400;
   transition: color var(--transition-base);
 }
 
 .footer-legal a:hover {
-  color: var(--accent-gold);
+  color: var(--accent-brown);
 }
 
 @media (max-width: 1024px) {
