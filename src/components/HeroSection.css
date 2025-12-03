@@ -216,6 +216,15 @@
   letter-spacing: 0.02em;
 }
 
+
+.hero-navbar-container {
+  display: flex;
+  justify-content: space-between;
+
+  padding: 0 var(--spacing-xl);
+}
+
+
 .brand-icon {
   width: 34px;
   height: 34px;

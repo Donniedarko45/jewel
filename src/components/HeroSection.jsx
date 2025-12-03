@@ -1,6 +1,7 @@
 import './HeroSection.css';
 import jewelryBackground from '../assets/jewel-bg.png';
 import bgStats from '../assets/bgStats.jpg';
+import logoDiva from '../assets/logoDiva.png';
 const HeroSection = ({ onNavigate }) => {
   const handleExploreClick = () => {
     if (onNavigate) {
@@ -13,6 +14,13 @@ const HeroSection = ({ onNavigate }) => {
     
     
     <section className="hero-section">
+
+      <div className="hero-navbar-container">
+        <div className='logo-container'>
+          <a href={logoDiva} className="logo-link">
+            <img src={logoDiva} alt="logo" className="logo-image" width={200} height={80}/>
+          </a>
+        </div>
     <div className="hero-navbar">
             <div className="hero-nav-menu-pill">
               <ul className="hero-nav-links">
@@ -23,6 +31,7 @@ const HeroSection = ({ onNavigate }) => {
               </ul>
               <button className="hero-contact-btn">Contact Us</button>
             </div>
+          </div>
           </div>
       <div className="hero-container">
         <div className="hero-glass-card">

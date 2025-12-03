@@ -34,7 +34,7 @@ const CategoryShowcase = ({ onNavigate }) => {
           <div className="category-content">
             <h2 className="category-heading">Choose The Type!</h2>
             <p className="category-desc">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut elit tellus, luctus nec ullamcorper mattis, pulvinar dapibus leo.
+            Discover our diverse collection of jewelry, each piece crafted to stay radiant, always.
             </p>
 
             <div className="category-circles">

@@ -33,10 +33,11 @@ function App() {
     <div className="app">
       <HeroSection onNavigate={setCurrentPage} />
       <FeaturesSection />
-      <AboutSection />
       <FeaturedProducts onProductClick={handleProductClick} />
-      <CategoryShowcase onNavigate={setCurrentPage} />
-      <LogoBar />
+      <AboutSection />
+   
+   
+
       <Footer />
     </div>
   );
