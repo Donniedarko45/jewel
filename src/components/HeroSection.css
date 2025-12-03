@@ -2,17 +2,25 @@
   position: relative;
   width: 100%;
   height: 100vh;
+  background-image: url('../assets/banner_image[1].png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
   min-height: 700px;
   overflow: hidden;
-  display: flex;
-  align-items: center;
+  
+
   justify-content: center;
-  background: #8B6F5B;
+
 }
 
 .hero-background-image {
   position: absolute;
   top: 0;
+  background-image: url('../assets/banner_image[1].png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
   left: 0;
   width: 100%;
   height: 100%;
@@ -49,18 +57,15 @@
 
 /* Hero Content Card - Glass Effect */
 .hero-glass-card {
-  background-image: url('../assets/banner_image[1].png');
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
+ 
   position: relative;
   width: 90%;
   max-width: 1200px;
   min-width: 800px;
-
-  backdrop-filter: blur(25px);
+  
+  backdrop-filter: blur(1.2px);
   -webkit-backdrop-filter: blur(25px);
-  border: 1.5px solid rgba(255, 255, 255, 0.2);
+
   border-radius: 24px;
   padding: 1.5rem 2rem 3rem 3rem;
   color: #fff;
@@ -77,6 +82,7 @@
   display: flex;
   justify-content: flex-end;
   margin-bottom: 1.5rem;
+  margin-top: 1.5rem;
 }
 
 .hero-nav-menu-pill {
@@ -225,13 +231,14 @@
 
 .hero-headline {
   font-family: var(--font-heading);
-  font-size: clamp(2.75rem, 5vw, 4rem);
+  font-size: clamp(2.75rem, 5vw, 2.75rem);
   font-weight: 400;
   line-height: 1.15;
-  margin-bottom: 2rem;
+  padding-bottom: 2.7rem;
+  margin-bottom: 1rem;
   color: #fff;
   text-shadow: 0 2px 20px rgba(0, 0, 0, 0.2);
-  letter-spacing: -0.01em;
+  letter-spacing: 0.01em;
 }
 
 .hero-actions {
@@ -301,7 +308,7 @@
 }
 
 .desc-text {
-  font-size: 0.8125rem;
+  font-size: 0.95rem;
   color: rgba(255, 255, 255, 0.75);
   line-height: 1.6;
   font-weight: 300;
@@ -578,7 +585,7 @@
   }
 
   .hero-headline {
-    font-size: 2.5rem;
+    font-size: 2rem;
   }
   
   .brand-tag {

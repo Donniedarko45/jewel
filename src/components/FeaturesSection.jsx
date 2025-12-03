@@ -9,22 +9,22 @@ const FeaturesSection = () => {
         {
             icon: shippingIcon,
             title: "Free Shipping",
-            description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
+            description: "Enjoy fast & free delivery on all your favorite pieces—because luxury should be effortless."
         },
         {
             icon: exclusiveIcon,
-            title: "Exclusive Design",
-            description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
+            title: "Exclusive Designs",
+            description: "Discover jewelry you won't find anywhere else—crafted to make you feel one of a kind."
         },
         {
             icon: packingIcon,
-            title: "Good Packaging",
-            description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
+            title: "Premium Packaging",
+            description: "Every order arrives in elegant, secure packaging—perfect for gifting or treating yourself."
         },
         {
             icon: qualityIcon,
-            title: "Highest Quality",
-            description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
+            title: "Long-Lasting Quality",
+            description: "Anti-tarnish, skin-friendly, and made to shine—quality you can trust every day."
         }
     ];
 
