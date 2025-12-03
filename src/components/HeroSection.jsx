@@ -1,5 +1,6 @@
 import './HeroSection.css';
 import jewelryBackground from '../assets/jewel-bg.png';
+import bgStats from '../assets/bgStats.jpg';
 const HeroSection = ({ onNavigate }) => {
   const handleExploreClick = () => {
     if (onNavigate) {
@@ -50,32 +51,17 @@ const HeroSection = ({ onNavigate }) => {
             <div className="hero-description">
               <p className="desc-title">// Shimmer Jewelry Store</p>
               <p className="desc-text">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut elit tellus, luctus nec ullamcorper mattis, pulvinar dapibus leo.
+              At DIVA & Co., we create jewelry that blends modern style with lasting quality.
+              From pendants to bracelets and chain bracelets—each piece is made to stay radiant, always.
               </p>
             </div>
           </div>
 
           <div className="hero-floating-elements">
-            <div className="floating-card clients-card">
-              <div className="client-avatars">
-                <img src="https://randomuser.me/api/portraits/women/1.jpg" alt="Client" />
-                <img src="https://randomuser.me/api/portraits/women/2.jpg" alt="Client" />
-                <img src="https://randomuser.me/api/portraits/women/3.jpg" alt="Client" />
-                <div className="add-client">+</div>
-              </div>
-              <div className="client-stat">
-                <span className="stat-number">230K</span>
-                <span className="stat-label">Happy Clients</span>
-              </div>
-            </div>
+            
 
-            <div className="floating-card detail-card">
-              <img src="https://images.unsplash.com/photo-1611591437281-460bfbe1220a?w=150&q=80" alt="Detail" className="detail-image" />
-              <div className="detail-info">
-                <h4>Beautiful In Every Detail</h4>
-                <a href="#read-more">Read More →</a>
-              </div>
-            </div>
+           
+          
           </div>
         </div>
       </div>

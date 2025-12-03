@@ -49,11 +49,15 @@
 
 /* Hero Content Card - Glass Effect */
 .hero-glass-card {
+  background-image: url('../assets/banner_image[1].png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
   position: relative;
   width: 90%;
   max-width: 1200px;
   min-width: 800px;
-  background: rgba(139, 111, 91, 0.5);
+
   backdrop-filter: blur(25px);
   -webkit-backdrop-filter: blur(25px);
   border: 1.5px solid rgba(255, 255, 255, 0.2);
@@ -335,6 +339,30 @@
   gap: 0.875rem;
   padding: 0.75rem 1.25rem;
   border-radius: 9999px;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  position: relative;
+  overflow: hidden;
+}
+
+.clients-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  z-index: 0;
+  border-radius: 9999px;
+}
+
+.clients-card > * {
+  position: relative;
+  z-index: 1;
 }
 
 .client-avatars {
