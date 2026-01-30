@@ -1,3 +1,4 @@
+import logoImage from '../assets/logoDiva.png';
 import './Footer.css';
 
 const Footer = () => {
@@ -6,7 +7,7 @@ const Footer = () => {
       <div className="footer-container">
         <div className="footer-content">
           <div className="footer-column">
-            <h3 className="footer-logo">LUXE</h3>
+            <img src={logoImage} alt="Diva & Co." className="footer-logo-image" />
             <p className="footer-description">
               Crafting timeless elegance through exceptional jewelry design and unparalleled craftsmanship.
             </p>
@@ -55,9 +56,9 @@ const Footer = () => {
             <h4 className="footer-heading">Newsletter</h4>
             <p className="newsletter-text">Subscribe to receive exclusive offers and updates</p>
             <form className="newsletter-form">
-              <input 
-                type="email" 
-                placeholder="Your email address" 
+              <input
+                type="email"
+                placeholder="Your email address"
                 className="newsletter-input"
               />
               <button type="submit" className="newsletter-button">Subscribe</button>
@@ -66,7 +67,7 @@ const Footer = () => {
         </div>
 
         <div className="footer-bottom">
-          <p className="footer-copyright">© 2025 LUXE Jewelry. All rights reserved.</p>
+          <p className="footer-copyright">© 2025 Diva&Co Jewelry. All rights reserved.</p>
           <div className="footer-legal">
             <a href="#privacy">Privacy Policy</a>
             <a href="#terms">Terms of Service</a>

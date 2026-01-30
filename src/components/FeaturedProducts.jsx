@@ -1,31 +1,34 @@
+import { useNavigate } from 'react-router-dom';
 import './FeaturedProducts.css';
 
-const FeaturedProducts = ({ onProductClick }) => {
+const FeaturedProducts = () => {
+  const navigate = useNavigate();
+
   const categories = [
-  
-   {
-    id: 1,
-    name: 'BRACELETS',
-    image: 'https://res.cloudinary.com/die8tcfj1/image/upload/v1764785813/1764436168702_kowwaq.jpg',
-   },{
-    id: 2,
-    name:'PENDANTS',
-    image: 'https://res.cloudinary.com/die8tcfj1/image/upload/v1764785960/1764440232861_lrvgt3.png',
-   }
-  
+    {
+      id: 1,
+      name: 'BRACELETS',
+      type: 'bracelet',
+      image: 'https://res.cloudinary.com/die8tcfj1/image/upload/v1764785813/1764436168702_kowwaq.jpg',
+    },
+    {
+      id: 2,
+      name: 'PENDANTS',
+      type: 'pendant',
+      image: 'https://res.cloudinary.com/die8tcfj1/image/upload/v1764785960/1764440232861_lrvgt3.png',
+    }
   ];
 
   const handleCategoryClick = (category) => {
-    if (onProductClick) {
-      onProductClick(category);
-    }
+    // Navigate to products page - could add category filter in query params later
+    navigate('/products');
   };
 
   return (
     <section className="featured-products">
       <div className="featured-container">
         <h2 className="featured-heading">Our Collection</h2>
-        
+
         <div className="categories-grid">
           {categories.map((category) => (
             <div

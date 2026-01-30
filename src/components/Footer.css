@@ -24,12 +24,9 @@
   gap: var(--spacing-md);
 }
 
-.footer-logo {
-  font-family: var(--font-heading);
-  font-size: 2rem;
-  font-weight: 500;
-  letter-spacing: 0.05em;
-  color: var(--accent-brown);
+.footer-logo-image {
+  height: 50px;
+  width: auto;
   margin-bottom: var(--spacing-sm);
 }
 
@@ -189,7 +186,7 @@
     grid-template-columns: repeat(2, 1fr);
     gap: var(--spacing-xl);
   }
-  
+
   .footer-column:first-child {
     grid-column: 1 / -1;
   }
@@ -199,17 +196,17 @@
   .footer {
     padding: var(--spacing-2xl) var(--spacing-md) var(--spacing-md);
   }
-  
+
   .footer-content {
     grid-template-columns: 1fr;
     gap: var(--spacing-lg);
   }
-  
+
   .footer-bottom {
     flex-direction: column;
     text-align: center;
   }
-  
+
   .footer-legal {
     flex-direction: column;
     gap: var(--spacing-sm);
