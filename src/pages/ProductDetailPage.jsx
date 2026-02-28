@@ -132,11 +132,11 @@ const ProductDetailPage = ({ productId }) => {
     : [product.image, product.secondaryImage, product.image].filter(Boolean);
 
   const productPrice = typeof product.price === 'number'
-    ? `$${product.price.toLocaleString()}`
+    ? `₹${product.price.toLocaleString('en-IN')}`
     : product.price;
 
   const originalPrice = product.originalPrice
-    ? `$${product.originalPrice.toLocaleString()}`
+    ? `₹${product.originalPrice.toLocaleString('en-IN')}`
     : null;
 
   const isSale = originalPrice && product.originalPrice > product.price;

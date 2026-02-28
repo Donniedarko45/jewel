@@ -18,7 +18,7 @@ const ProductListingPage = () => {
     {
       id: 1,
       title: 'Classic Diamond Bracelet',
-      price: '$2,499',
+      price: '₹2,499',
       type: 'bracelet',
       image: 'https://images.unsplash.com/photo-1611591437281-460bfbe1220a?w=500&q=80',
       secondaryImage: 'https://images.unsplash.com/photo-1573408301185-9146fe634ad0?w=500&q=80'
@@ -26,7 +26,7 @@ const ProductListingPage = () => {
     {
       id: 2,
       title: 'Gold Chain Pendant',
-      price: '$899',
+      price: '₹899',
       type: 'pendant',
       image: 'https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?w=500&q=80',
       secondaryImage: 'https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?w=500&q=80'
@@ -34,7 +34,7 @@ const ProductListingPage = () => {
     {
       id: 3,
       title: 'Emerald Gold Bracelet',
-      price: '$3,199',
+      price: '₹3,199',
       type: 'bracelet',
       image: 'https://images.unsplash.com/photo-1573408301185-9146fe634ad0?w=500&q=80',
       secondaryImage: 'https://images.unsplash.com/photo-1611591437281-460bfbe1220a?w=500&q=80'
@@ -42,7 +42,7 @@ const ProductListingPage = () => {
     {
       id: 4,
       title: 'Sapphire Pendant',
-      price: '$1,899',
+      price: '₹1,899',
       type: 'pendant',
       image: 'https://images.unsplash.com/photo-1506630448388-4e683c67ddb0?w=500&q=80',
       secondaryImage: 'https://images.unsplash.com/photo-1602173574767-37ac01994b2a?w=500&q=80'
@@ -50,7 +50,7 @@ const ProductListingPage = () => {
     {
       id: 5,
       title: 'Diamond Tennis Bracelet',
-      price: '$4,299',
+      price: '₹4,299',
       type: 'bracelet',
       image: 'https://images.unsplash.com/photo-1611591437281-460bfbe1220a?w=500&q=80',
       secondaryImage: 'https://images.unsplash.com/photo-1573408301185-9146fe634ad0?w=500&q=80'
@@ -58,7 +58,7 @@ const ProductListingPage = () => {
     {
       id: 6,
       title: 'Pearl Drop Pendant',
-      price: '$1,199',
+      price: '₹1,199',
       type: 'pendant',
       image: 'https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?w=500&q=80',
       secondaryImage: 'https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?w=500&q=80'
@@ -79,7 +79,7 @@ const ProductListingPage = () => {
         const transformedProducts = response.data.map(product => ({
           id: product._id,
           title: product.name,
-          price: `$${product.price.toLocaleString()}`,
+          price: `₹${product.price.toLocaleString('en-IN')}`,
           type: product.type,
           image: product.images?.[0]?.url || 'https://via.placeholder.com/500',
           secondaryImage: product.images?.[1]?.url || product.images?.[0]?.url,

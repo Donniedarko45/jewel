@@ -246,7 +246,7 @@ const AdminProductForm = ({ onNavigate, productId = null }) => {
                     {/* Price Section */}
                     <div className="form-row">
                         <div className="form-group">
-                            <label htmlFor="price">Price ($) *</label>
+                            <label htmlFor="price">Price (₹) *</label>
                             <input
                                 type="number"
                                 id="price"
@@ -260,7 +260,7 @@ const AdminProductForm = ({ onNavigate, productId = null }) => {
                             />
                         </div>
                         <div className="form-group">
-                            <label htmlFor="originalPrice">Original Price ($)</label>
+                            <label htmlFor="originalPrice">Original Price (₹)</label>
                             <input
                                 type="number"
                                 id="originalPrice"

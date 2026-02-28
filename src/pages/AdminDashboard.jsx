@@ -184,9 +184,9 @@ const AdminDashboard = ({ onNavigate }) => {
                                         </span>
                                     </td>
                                     <td>
-                                        ${product.price}
+                                        ₹{product.price}
                                         {product.originalPrice && product.originalPrice > product.price && (
-                                            <span className="original-price">${product.originalPrice}</span>
+                                            <span className="original-price">₹{product.originalPrice}</span>
                                         )}
                                     </td>
                                     <td>{product.quantity}</td>
