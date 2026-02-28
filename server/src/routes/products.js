@@ -10,7 +10,7 @@ router.get('/', async (req, res) => {
         const { type } = req.query;
         const filter = type ? { type } : {};
 
-        const products = await Product.find(filter).sort({ createdAt: -1 });
+        const products = await Product.find(filter);
 
         res.json({
             success: true,
@@ -56,6 +56,21 @@ router.post('/', authMiddleware, async (req, res) => {
     try {
         const { type, name, price, originalPrice, quantity, description, images } = req.body;
 
+        // Basic validation
+        const errors = [];
+        if (!type) errors.push('Product type is required');
+        if (!name) errors.push('Product name is required');
+        if (price == null) errors.push('Product price is required');
+        if (!description) errors.push('Product description is required');
+
+        if (errors.length > 0) {
+            return res.status(400).json({
+                success: false,
+                message: 'Validation error',
+                errors
+            });
+        }
+
         const product = await Product.create({
             type,
             name,
@@ -72,12 +87,12 @@ router.post('/', authMiddleware, async (req, res) => {
             data: product
         });
     } catch (error) {
-        if (error.name === 'ValidationError') {
-            const messages = Object.values(error.errors).map(err => err.message);
+        // Handle PostgreSQL constraint violations
+        if (error.code === '23514' || error.code === '23502') {
             return res.status(400).json({
                 success: false,
                 message: 'Validation error',
-                errors: messages
+                errors: [error.detail || error.message]
             });
         }
 
@@ -96,8 +111,7 @@ router.put('/:id', authMiddleware, async (req, res) => {
 
         const product = await Product.findByIdAndUpdate(
             req.params.id,
-            { type, name, price, originalPrice, quantity, description, images },
-            { new: true, runValidators: true }
+            { type, name, price, originalPrice, quantity, description, images }
         );
 
         if (!product) {
@@ -113,12 +127,12 @@ router.put('/:id', authMiddleware, async (req, res) => {
             data: product
         });
     } catch (error) {
-        if (error.name === 'ValidationError') {
-            const messages = Object.values(error.errors).map(err => err.message);
+        // Handle PostgreSQL constraint violations
+        if (error.code === '23514' || error.code === '23502') {
             return res.status(400).json({
                 success: false,
                 message: 'Validation error',
-                errors: messages
+                errors: [error.detail || error.message]
             });
         }
 
