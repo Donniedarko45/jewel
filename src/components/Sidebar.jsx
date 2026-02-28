@@ -26,12 +26,12 @@ const Sidebar = ({ filters, onFilterChange }) => {
     const updated = selectedFilters[filterType].includes(value)
       ? selectedFilters[filterType].filter(item => item !== value)
       : [...selectedFilters[filterType], value];
-    
+
     setSelectedFilters(prev => ({
       ...prev,
       [filterType]: updated
     }));
-    
+
     onFilterChange?.({ ...selectedFilters, [filterType]: updated, priceRange });
   };
 
@@ -49,7 +49,7 @@ const Sidebar = ({ filters, onFilterChange }) => {
       <h2 className="sidebar-title">Filters</h2>
 
       <div className="filter-section">
-        <button 
+        <button
           className="filter-header"
           onClick={() => toggleSection('category')}
         >
@@ -73,7 +73,7 @@ const Sidebar = ({ filters, onFilterChange }) => {
       </div>
 
       <div className="filter-section">
-        <button 
+        <button
           className="filter-header"
           onClick={() => toggleSection('material')}
         >
@@ -97,7 +97,7 @@ const Sidebar = ({ filters, onFilterChange }) => {
       </div>
 
       <div className="filter-section">
-        <button 
+        <button
           className="filter-header"
           onClick={() => toggleSection('priceRange')}
         >
@@ -116,8 +116,8 @@ const Sidebar = ({ filters, onFilterChange }) => {
                 onChange={handlePriceChange}
               />
               <div className="price-labels">
-                <span>${priceRange[0]}</span>
-                <span>${priceRange[1]}</span>
+                <span>₹{priceRange[0]}</span>
+                <span>₹{priceRange[1]}</span>
               </div>
             </div>
           </div>
