@@ -23,9 +23,11 @@ const upload = multer({
 });
 
 // Helper function to upload to Cloudinary
-const uploadToCloudinary = (buffer, folder) => {
+const uploadToCloudinary = (file, folder) => {
+    const dataUri = `data:${file.mimetype};base64,${file.buffer.toString('base64')}`;
     return new Promise((resolve, reject) => {
-        const uploadStream = cloudinary.uploader.upload_stream(
+        cloudinary.uploader.upload(
+            dataUri,
             {
                 folder: `jewel/${folder}`,
                 resource_type: 'image',
@@ -39,8 +41,6 @@ const uploadToCloudinary = (buffer, folder) => {
                 else resolve(result);
             }
         );
-
-        uploadStream.end(buffer);
     });
 };
 
@@ -56,7 +56,7 @@ router.post('/', authMiddleware, upload.array('images', 5), async (req, res) => 
 
         const folder = req.body.folder || 'products';
         const uploadPromises = req.files.map(file =>
-            uploadToCloudinary(file.buffer, folder)
+            uploadToCloudinary(file, folder)
         );
 
         const results = await Promise.all(uploadPromises);
