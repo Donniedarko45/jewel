@@ -1,0 +1,113 @@
+.featured-products {
+  padding: var(--spacing-3xl) 0;
+  background-color: #F5F1ED;
+}
+
+.featured-container {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 0 var(--spacing-xl);
+}
+
+.featured-heading {
+  font-family: var(--font-heading);
+  font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: 400;
+  color: var(--text-primary);
+  text-align: center;
+  margin-bottom: 3rem;
+  line-height: 1.2;
+  letter-spacing: 0.02em;
+  font-style: italic;
+}
+
+.categories-grid {
+  display: flex;
+  gap: 7rem;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
+}
+
+.category-card {
+  width: 300px;
+  flex-shrink: 0;
+}
+
+.category-image {
+  position: relative;
+  width: 100%;
+  height: 350px;
+  border-radius: 12px;
+  overflow: hidden;
+  margin-bottom: 1rem;
+  background: #FFFFFF;
+}
+
+.category-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform var(--transition-slow);
+}
+
+.category-card:hover .category-image img {
+  transform: scale(1.05);
+}
+
+.discount-badge {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.95);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-heading);
+  font-size: 1rem;
+  font-weight: 500;
+  color: var(--text-primary);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.category-label {
+  background: rgba(255, 255, 255, 0.7);
+  padding: 0.65rem 1rem;
+  border-radius: 8px;
+  text-align: center;
+  font-family: var(--font-body);
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+}
+
+@media (max-width: 1024px) {
+  .categories-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem;
+  }
+
+  .category-image {
+    height: 350px;
+  }
+}
+
+@media (max-width: 768px) {
+  .categories-grid {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+
+  .category-image {
+    height: 300px;
+  }
+
+  .featured-heading {
+    margin-bottom: 2rem;
+  }
+}

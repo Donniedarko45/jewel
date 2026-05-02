@@ -1,0 +1,99 @@
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  /* Warm Elegant Color Palette */
+  --primary-bg: #F5F1ED;
+  --secondary-bg: #FFFFFF;
+  --hero-bg: #8B6F5B;
+  --text-on-dark: #FFFFFF;
+  --text-primary: #2C2420;
+  --text-secondary: #6B5D54;
+  --text-muted: #9B8B7E;
+  --accent-gold: #D4A574;
+  --accent-brown: #8B6F5B;
+  --accent-dark: #5D4A3C;
+  --border-light: #E5DDD5;
+  --accent-cta: #5D4A3C;
+  
+  /* Elegant Typography */
+  --font-heading: 'Cormorant Garamond', serif;
+  --font-body: 'Inter', -apple-system, sans-serif;
+  
+  /* Spacing System */
+  --spacing-xs: 0.5rem;
+  --spacing-sm: 1rem;
+  --spacing-md: 1.5rem;
+  --spacing-lg: 2rem;
+  --spacing-xl: 3rem;
+  --spacing-2xl: 4rem;
+  --spacing-3xl: 6rem;
+  
+  /* Transitions */
+  --transition-fast: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-base: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-slow: 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  
+  /* Shadows */
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.04);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.06);
+  --shadow-lg: 0 10px 30px rgba(0, 0, 0, 0.08);
+  --shadow-xl: 0 20px 50px rgba(0, 0, 0, 0.12);
+  
+  /* Border Radius */
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 16px;
+  --radius-xl: 24px;
+  --radius-full: 9999px;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-body);
+  color: var(--text-primary);
+  background-color: #F5F1ED;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+  font-size: 16px;
+  letter-spacing: 0;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-heading);
+  font-weight: 500;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  color: var(--text-primary);
+}
+
+h1 { font-size: clamp(3rem, 6vw, 5.5rem); font-weight: 400; }
+h2 { font-size: clamp(2.25rem, 4.5vw, 3.75rem); font-weight: 400; }
+h3 { font-size: clamp(1.5rem, 3vw, 2rem); font-weight: 500; }
+h4 { font-size: clamp(1.25rem, 2.5vw, 1.5rem); font-weight: 500; }
+
+a {
+  text-decoration: none;
+  color: inherit;
+  transition: var(--transition-base);
+}
+
+button {
+  font-family: var(--font-body);
+  cursor: pointer;
+  border: none;
+  transition: var(--transition-base);
+  letter-spacing: 0.02em;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
