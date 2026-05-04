@@ -1,138 +1,94 @@
-.product-card-component {
-  background-color: #FFFFFF;
-  border: 1px solid var(--border-light);
-  border-radius: var(--radius-lg);
-  padding: var(--spacing-md);
-  transition: all var(--transition-base);
-  position: relative;
+.pcard {
+  background: #fff;
+  border-radius: 4px;
   overflow: hidden;
+  cursor: pointer;
+  transition: box-shadow 0.3s, transform 0.3s;
+}
+.pcard:hover {
+  box-shadow: 0 8px 28px rgba(0,0,0,0.08);
+  transform: translateY(-4px);
 }
 
-.product-card-component::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 2px;
-  background: linear-gradient(90deg, var(--accent-gold), var(--accent-rose));
-  transform: scaleX(0);
-  transition: transform var(--transition-base);
-}
-
-.product-card-component:hover::before {
-  transform: scaleX(1);
-}
-
-.product-card-component:hover {
-  transform: translateY(-8px);
-  box-shadow: var(--shadow-lg);
-  border-color: var(--accent-gold);
-}
-
-.product-card-image {
-  width: 100%;
-  aspect-ratio: 1 / 1;
-  overflow: hidden;
-  margin-bottom: var(--spacing-md);
-  border-radius: var(--radius-sm);
-  background-color: #fff;
+.pcard-img {
   position: relative;
+  aspect-ratio: 1/1;
+  overflow: hidden;
+  background: #f5f2ed;
 }
-
-.product-card-image::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(to bottom, transparent 50%, rgba(0, 0, 0, 0.03));
-  opacity: 0;
-  transition: opacity var(--transition-base);
-}
-
-.product-card-component:hover .product-card-image::after {
-  opacity: 1;
-}
-
-.product-card-image img {
+.pcard-img img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: transform var(--transition-slow);
+  transition: transform 0.4s ease;
+}
+.pcard:hover .pcard-img img {
+  transform: scale(1.05);
+}
+.pcard-badge {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  background: #c0392b;
+  color: #fff;
+  font-size: 0.7rem;
+  font-weight: 600;
+  padding: 3px 10px;
+  border-radius: 3px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
 }
 
-.product-card-component:hover .product-card-image img {
-  transform: scale(1.1);
-}
-
-.product-card-info {
-  margin-bottom: var(--spacing-md);
+.pcard-body {
+  padding: 0.9rem 0.75rem;
   text-align: center;
 }
-
-.product-card-title {
-  font-family: var(--font-heading);
-  font-size: 1.25rem;
+.pcard-name {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1rem;
   font-weight: 500;
-  margin-bottom: var(--spacing-xs);
-  color: var(--text-primary);
-  letter-spacing: -0.01em;
+  color: #1a1a1a;
+  margin: 0 0 0.35rem;
   line-height: 1.3;
-}
-
-.product-card-price {
-  font-family: var(--font-body);
-  font-size: 1.125rem;
-  color: var(--accent-gold);
-  margin: 0;
-  font-weight: 600;
-  letter-spacing: 0.02em;
-}
-
-.product-card-button {
-  width: 100%;
-  padding: 0.875rem var(--spacing-md);
-  background-color: var(--accent-dark);
-  color: #FFFFFF;
-  border: 2px solid var(--accent-dark);
-  border-radius: var(--radius-md);
-  font-family: var(--font-body);
-  font-size: 0.875rem;
-  font-weight: 500;
-  letter-spacing: 0.05em;
-  text-transform: uppercase;
-  cursor: pointer;
-  transition: all var(--transition-base);
-  position: relative;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
   overflow: hidden;
 }
 
-.product-card-button::before {
-  content: '';
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 0;
-  height: 0;
-  border-radius: 50%;
-  background-color: var(--accent-gold);
-  transform: translate(-50%, -50%);
-  transition: width var(--transition-base), height var(--transition-base);
-  z-index: 0;
+.pcard-price-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-bottom: 0.75rem;
+}
+.pcard-price {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #c9a961;
+}
+.pcard-original {
+  font-size: 0.82rem;
+  color: #aaa;
+  text-decoration: line-through;
 }
 
-.product-card-button:hover::before {
-  width: 300px;
-  height: 300px;
+.pcard-cart-btn {
+  width: 100%;
+  padding: 0.6rem;
+  background: #fff;
+  border: 1.5px solid #1a1a1a;
+  border-radius: 3px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  color: #1a1a1a;
+  cursor: pointer;
+  transition: all 0.25s;
+  text-transform: capitalize;
 }
-
-.product-card-button:hover {
-  color: #1A1A1A;
-  border-color: var(--accent-gold);
-  transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(201, 169, 97, 0.3);
-}
-
-.product-card-button span {
-  position: relative;
-  z-index: 1;
+.pcard-cart-btn:hover {
+  background: #1a1a1a;
+  color: #fff;
 }

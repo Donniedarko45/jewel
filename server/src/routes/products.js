@@ -4,13 +4,13 @@ import authMiddleware from '../middleware/auth.js';
 
 const router = express.Router();
 
-// GET all products (public)
+// GET all products (public — hides quantity)
 router.get('/', async (req, res) => {
     try {
         const { type } = req.query;
         const filter = type ? { type } : {};
 
-        const products = await Product.find(filter);
+        const products = await Product.findPublic(filter);
 
         res.json({
             success: true,
@@ -26,10 +26,10 @@ router.get('/', async (req, res) => {
     }
 });
 
-// GET single product (public)
+// GET single product (public — hides quantity)
 router.get('/:id', async (req, res) => {
     try {
-        const product = await Product.findById(req.params.id);
+        const product = await Product.findByIdPublic(req.params.id);
 
         if (!product) {
             return res.status(404).json({

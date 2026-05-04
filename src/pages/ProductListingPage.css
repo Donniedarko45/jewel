@@ -1,7 +1,7 @@
 .product-listing-page {
   min-height: 100vh;
   background-color: #f8f6f1;
-  padding-top: 72px;
+  padding-top: 80px;
 }
 
 .listing-container {
@@ -9,119 +9,86 @@
   margin: 0 auto;
   padding: 2rem;
   display: grid;
-  grid-template-columns: 300px 1fr;
+  grid-template-columns: 200px 1fr;
   gap: 2rem;
   align-items: start;
 }
 
 .listing-main {
-  min-height: 100vh;
+  min-height: 60vh;
+}
+
+.listing-top {
+  margin-bottom: 1.5rem;
 }
 
 .listing-header {
-  margin-bottom: 1.5rem;
   display: flex;
   justify-content: space-between;
   align-items: baseline;
-  flex-wrap: wrap;
-  gap: 1rem;
+  margin-bottom: 1rem;
 }
 
 .listing-header h1 {
   font-family: 'Cormorant Garamond', serif;
-  font-size: clamp(2rem, 4vw, 2.75rem);
+  font-size: 2rem;
   color: #1a1a1a;
-  letter-spacing: 1px;
-  position: relative;
-  display: inline-block;
   margin: 0;
-}
-
-.listing-header h1::after {
-  content: '';
-  position: absolute;
-  bottom: -8px;
-  left: 0;
-  width: 60px;
-  height: 3px;
-  background: linear-gradient(90deg, #c9a961, transparent);
+  font-weight: 500;
+  font-style: italic;
 }
 
 .product-count {
-  font-size: 0.95rem;
-  color: #666;
-  font-weight: 400;
-  letter-spacing: 0.5px;
+  font-size: 0.9rem;
+  color: #888;
   margin: 0;
 }
 
-/* Category Tabs */
 .category-tabs {
   display: flex;
   gap: 0.5rem;
-  margin-bottom: 1.5rem;
   flex-wrap: wrap;
 }
 
 .category-tab {
-  padding: 0.75rem 1.5rem;
-  background: white;
-  border: 2px solid #e5e5e5;
-  border-radius: 30px;
-  font-size: 0.9rem;
+  padding: 0.55rem 1.25rem;
+  background: #fff;
+  border: 1.5px solid #e0e0e0;
+  border-radius: 24px;
+  font-size: 0.85rem;
   font-weight: 500;
   color: #666;
   cursor: pointer;
-  transition: all 0.3s;
+  transition: all 0.25s;
 }
-
 .category-tab:hover {
   border-color: #c9a961;
   color: #c9a961;
 }
-
 .category-tab.active {
-  background: #c9a961;
-  border-color: #c9a961;
-  color: #1a1a1a;
+  background: #5d4a3c;
+  border-color: #5d4a3c;
+  color: #fff;
 }
 
-/* Loading & Error States */
-.loading-state,
-.error-state {
+.loading-state {
   text-align: center;
   padding: 3rem;
-  color: #666;
-}
-
-.error-state {
-  color: #dc3545;
+  color: #999;
+  font-size: 0.95rem;
 }
 
 @media (max-width: 1024px) {
   .listing-container {
-    grid-template-columns: 260px 1fr;
+    grid-template-columns: 180px 1fr;
     gap: 1.5rem;
-    padding: 1.5rem 1rem;
   }
 }
 
 @media (max-width: 768px) {
-  .product-listing-page {
-    padding-top: 64px;
-  }
-
+  .product-listing-page { padding-top: 70px; }
   .listing-container {
     grid-template-columns: 1fr;
     padding: 1rem;
-    gap: 1rem;
-  }
-
-  .listing-header {
-    margin-bottom: 1rem;
-  }
-
-  .category-tabs {
-    justify-content: center;
   }
 }

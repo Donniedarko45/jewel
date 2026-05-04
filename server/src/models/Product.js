@@ -27,6 +27,14 @@ const toProduct = (row) => {
     };
 };
 
+// Public version — hides quantity from customers
+const toPublicProduct = (row) => {
+    const product = toProduct(row);
+    if (!product) return null;
+    const { quantity, ...publicData } = product;
+    return publicData;
+};
+
 const Product = {
     async find(filter = {}) {
         let query = 'SELECT * FROM products';
@@ -47,11 +55,39 @@ const Product = {
         return result.rows.map(toProduct);
     },
 
+    // Public version — hides quantity
+    async findPublic(filter = {}) {
+        let query = 'SELECT * FROM products';
+        const values = [];
+        const conditions = [];
+
+        if (filter.type) {
+            conditions.push(`type = $${values.length + 1}`);
+            values.push(filter.type);
+        }
+
+        if (conditions.length > 0) {
+            query += ' WHERE ' + conditions.join(' AND ');
+        }
+        query += ' ORDER BY created_at DESC';
+
+        const result = await getPool().query(query, values);
+        return result.rows.map(toPublicProduct);
+    },
+
     async findById(id) {
         const numericId = parseInt(id, 10);
         if (isNaN(numericId)) return null;
         const result = await getPool().query('SELECT * FROM products WHERE id = $1', [numericId]);
         return toProduct(result.rows[0]);
+    },
+
+    // Public version — hides quantity
+    async findByIdPublic(id) {
+        const numericId = parseInt(id, 10);
+        if (isNaN(numericId)) return null;
+        const result = await getPool().query('SELECT * FROM products WHERE id = $1', [numericId]);
+        return toPublicProduct(result.rows[0]);
     },
 
     async create(data) {

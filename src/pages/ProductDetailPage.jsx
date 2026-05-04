@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import NavigationBar from '../components/NavigationBar';
+import Footer from '../components/Footer';
 import { useCart } from '../context/CartContext';
 import { productApi } from '../services/api.js';
 import './ProductDetailPage.css';
@@ -276,6 +277,7 @@ const ProductDetailPage = ({ productId }) => {
             )}
           </div>
         </div>
+        <Footer />
       </div>
     </div>
   );

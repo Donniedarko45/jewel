@@ -15,18 +15,17 @@ const HeroSection = () => {
         <div className="hero-navbar-container">
           <div className='logo-container'>
             <Link to="/" className="logo-link">
-              <img src={logoDiva} alt="Diva & Co." className="logo-image" width={200} height={80} />
+              <img src={logoDiva} alt="Diva & Co." className="logo-image" width={260} height={100} />
             </Link>
           </div>
           <div className="hero-navbar">
             <div className="hero-nav-menu-pill">
               <ul className="hero-nav-links">
                 <li className="active"><Link to="/">Home</Link></li>
-                <li><a href="#about">About Us</a></li>
+                <li><a href="#about" onClick={(e) => { e.preventDefault(); document.getElementById('about')?.scrollIntoView({ behavior: 'smooth' }); }}>About Us</a></li>
                 <li><Link to="/products">Collections</Link></li>
-                <li><a href="#">Pages <span className="dropdown-arrow">▼</span></a></li>
               </ul>
-              <button className="hero-contact-btn">Contact Us</button>
+              <button className="hero-contact-btn" onClick={() => document.querySelector('.footer')?.scrollIntoView({ behavior: 'smooth' })}>Contact Us</button>
             </div>
           </div>
         </div>

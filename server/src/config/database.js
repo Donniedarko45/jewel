@@ -79,7 +79,7 @@ const initDB = async () => {
 
         console.log('PostgreSQL connected & tables initialized');
     } catch (error) {
-        console.error(`Database Error: ${error.message}`);
+        console.error(`Database Eravni144ror: ${error.message}`);
         throw error;
     } finally {
         client.release();

@@ -8,6 +8,25 @@ const NavigationBar = ({ showLogo = true }) => {
   const currentPath = location.pathname;
   const { cartCount, setIsCartOpen } = useCart();
 
+  const scrollToAbout = (e) => {
+    e.preventDefault();
+    const about = document.getElementById('about');
+    if (about) {
+      about.scrollIntoView({ behavior: 'smooth' });
+    } else {
+      // If not on home page, navigate there
+      window.location.href = '/#about';
+    }
+  };
+
+  const scrollToFooter = (e) => {
+    e.preventDefault();
+    const footer = document.querySelector('.footer');
+    if (footer) {
+      footer.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
   return (
     <nav className="navigation-bar">
       <div className="nav-container">
@@ -27,16 +46,13 @@ const NavigationBar = ({ showLogo = true }) => {
               <Link to="/">Home</Link>
             </li>
             <li>
-              <a href="/#about">About Us</a>
+              <a href="#about" onClick={scrollToAbout}>About Us</a>
             </li>
             <li className={currentPath === '/products' ? 'active' : ''}>
               <Link to="/products">Collections</Link>
             </li>
-            <li>
-              <a href="#">Pages <span className="dropdown-arrow">▼</span></a>
-            </li>
           </ul>
-          <button className="contact-btn">Contact Us</button>
+          <button className="contact-btn" onClick={scrollToFooter}>Contact Us</button>
         </div>
 
         <button className="nav-cart-btn" onClick={() => setIsCartOpen(true)} aria-label="Open cart">
