@@ -27,7 +27,7 @@ const Footer = () => {
             <h4>Help</h4>
             <ul>
               <li><a href="tel:+919876543210">+91 98765 43210</a></li>
-              <li><a href="mailto:contact@divaandco.com">contact@divaandco.com</a></li>
+              <li><a href="mailto:jewel@divaco.shop">jewel@divaco.shop</a></li>
             </ul>
           </div>
 
