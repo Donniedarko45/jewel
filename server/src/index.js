@@ -17,7 +17,7 @@ configureCloudinary();
 
 // Middleware
 app.use(cors({
-    origin: ['http://localhost:5173', 'http://localhost:3000', 'https://jewel-omega.vercel.app','https://www.divaco.shop'],
+    origin: ['http://localhost:5173', 'http://localhost:3000', 'https://jewel-omega.vercel.app', 'https://www.divaco.shop', 'https://divaco.shop'],
     credentials: true
 }));
 app.use(express.json());
