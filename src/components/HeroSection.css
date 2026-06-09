@@ -549,36 +549,29 @@
 }
 
 @media (max-width: 768px) {
+  .hero-section {
+    height: auto;
+    min-height: 100vh;
+    padding-top: 120px;
+    padding-bottom: var(--spacing-xl);
+    display: flex;
+    align-items: center;
+  }
+
+  .hero-container {
+    height: auto;
+    padding: 0 var(--spacing-sm);
+  }
+
   .hero-glass-card {
-    width: 90%;
-    padding: 1.25rem 1.5rem 2rem 2rem;
+    width: 100%;
+    min-height: auto;
+    padding: 1.5rem;
   }
 
   .glass-content {
     width: 100%;
     max-width: 100%;
-  }
-
-  .hero-navbar {
-    margin-bottom: 0.75rem;
-  }
-
-  .hero-nav-menu-pill {
-    flex-direction: column;
-    padding: 1rem;
-    gap: 1rem;
-    width: 100%;
-  }
-
-  .hero-nav-links {
-    flex-direction: column;
-    gap: 0.75rem;
-    width: 100%;
-    text-align: center;
-  }
-
-  .hero-contact-btn {
-    width: 100%;
   }
 
   .back-arrow-btn {
@@ -594,11 +587,21 @@
   }
 
   .hero-headline {
-    font-size: 2rem;
+    font-size: 1.85rem;
+    padding-bottom: 1.5rem;
+    line-height: 1.25;
   }
   
   .brand-tag {
     font-size: 1rem;
     margin-bottom: 1.25rem;
+  }
+
+  .hero-actions {
+    margin-bottom: 1.5rem;
+  }
+
+  .hero-cta {
+    padding: 0.8rem 2rem;
   }
 }

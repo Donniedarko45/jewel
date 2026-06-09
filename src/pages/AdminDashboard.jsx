@@ -213,6 +213,64 @@ const AdminDashboard = ({ onNavigate }) => {
                             ))}
                         </tbody>
                     </table>
+
+                    {/* Responsive Mobile Card List Layout */}
+                    <div className="products-mobile-list">
+                        {products.map((product) => (
+                            <div key={product._id} className="admin-product-card">
+                                <div className="card-header-row">
+                                    <div className="product-thumb">
+                                        {product.images?.[0]?.url ? (
+                                            <img src={product.images[0].url} alt={product.name} />
+                                        ) : (
+                                            <div className="no-image">No Image</div>
+                                        )}
+                                    </div>
+                                    <div className="product-details">
+                                        <h3 className="product-name">{product.name}</h3>
+                                        <span className={`type-badge ${product.type}`}>{product.type}</span>
+                                    </div>
+                                </div>
+                                
+                                <div className="card-info-grid">
+                                    <div className="info-item">
+                                        <span className="info-label">Price</span>
+                                        <span className="info-value">
+                                            ₹{product.price}
+                                            {product.originalPrice && product.originalPrice > product.price && (
+                                                <span className="original-price">₹{product.originalPrice}</span>
+                                            )}
+                                        </span>
+                                    </div>
+                                    <div className="info-item">
+                                        <span className="info-label">Qty</span>
+                                        <span className="info-value">{product.quantity}</span>
+                                    </div>
+                                    <div className="info-item">
+                                        <span className="info-label">Status</span>
+                                        <span className={`status-badge ${product.inStock ? 'in-stock' : 'out-of-stock'}`}>
+                                            {product.inStock ? 'In Stock' : 'Out of Stock'}
+                                        </span>
+                                    </div>
+                                </div>
+
+                                <div className="actions">
+                                    <button
+                                        className="btn-edit"
+                                        onClick={() => onNavigate('admin-edit', product._id)}
+                                    >
+                                        Edit
+                                    </button>
+                                    <button
+                                        className="btn-delete"
+                                        onClick={() => handleDelete(product._id)}
+                                    >
+                                        Delete
+                                    </button>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
                 </div>
             )}
         </div>

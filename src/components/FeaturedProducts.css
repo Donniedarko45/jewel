@@ -22,16 +22,16 @@
 }
 
 .categories-grid {
-  display: flex;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
   gap: 7rem;
-  align-items: center;
   justify-content: center;
   margin: 0 auto;
+  max-width: 800px;
 }
 
 .category-card {
-  width: 300px;
-  flex-shrink: 0;
+  width: 100%;
 }
 
 .category-image {
@@ -88,8 +88,7 @@
 
 @media (max-width: 1024px) {
   .categories-grid {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 2rem;
+    gap: 3rem;
   }
 
   .category-image {
@@ -101,6 +100,7 @@
   .categories-grid {
     grid-template-columns: 1fr;
     gap: 2rem;
+    max-width: 340px;
   }
 
   .category-image {

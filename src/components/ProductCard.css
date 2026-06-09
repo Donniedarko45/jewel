@@ -92,3 +92,28 @@
   background: #1a1a1a;
   color: #fff;
 }
+
+@media (max-width: 640px) {
+  .pcard-body {
+    padding: 0.65rem 0.5rem;
+  }
+  .pcard-name {
+    font-size: 0.85rem;
+    margin-bottom: 0.2rem;
+  }
+  .pcard-price-row {
+    gap: 0.35rem;
+    margin-bottom: 0.5rem;
+  }
+  .pcard-price {
+    font-size: 0.85rem;
+  }
+  .pcard-original {
+    font-size: 0.75rem;
+  }
+  .pcard-cart-btn {
+    padding: 0.45rem;
+    font-size: 0.7rem;
+    letter-spacing: 0.2px;
+  }
+}

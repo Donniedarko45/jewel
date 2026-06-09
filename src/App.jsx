@@ -1,6 +1,7 @@
 import { BrowserRouter as Router, Routes, Route, useNavigate, useParams } from 'react-router-dom';
 import { CartProvider } from './context/CartContext';
 import CartSidebar from './components/CartSidebar';
+import NavigationBar from './components/NavigationBar';
 import HeroSection from './components/HeroSection';
 import FeaturesSection from './components/FeaturesSection';
 import AboutSection from './components/AboutSection';
@@ -19,6 +20,7 @@ function HomePage() {
   };
   return (
     <div className="app">
+      <NavigationBar />
       <HeroSection onNavigate={(page) => navigate(`/${page === 'home' ? '' : page}`)} />
       <FeaturesSection />
       <FeaturedProducts onProductClick={handleProductClick} />

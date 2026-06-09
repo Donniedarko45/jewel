@@ -13,6 +13,7 @@ const ProductListingPage = () => {
   const [loading, setLoading] = useState(true);
   const [categoryFilter, setCategoryFilter] = useState('all');
   const [sidebarFilters, setSidebarFilters] = useState({ categories: [], priceRange: 10000 });
+  const [showMobileFilters, setShowMobileFilters] = useState(false);
 
   useEffect(() => {
     fetchProducts();
@@ -74,7 +75,9 @@ const ProductListingPage = () => {
     <div className="product-listing-page">
       <NavigationBar />
       <div className="listing-container">
-        <Sidebar filters={sidebarFilters} onFilterChange={handleSidebarFilter} />
+        <div className={`sidebar-wrapper ${showMobileFilters ? 'show' : ''}`}>
+          <Sidebar filters={sidebarFilters} onFilterChange={handleSidebarFilter} />
+        </div>
         <main className="listing-main">
           <div className="listing-top">
             <div className="listing-header">
@@ -82,7 +85,16 @@ const ProductListingPage = () => {
                 {categoryFilter === 'all' ? 'All Jewelry' :
                   categoryFilter === 'bracelet' ? 'Bracelets' : 'Pendants'}
               </h1>
-              <p className="product-count">{filteredProducts.length} Products</p>
+              <div className="listing-header-actions">
+                <button 
+                  className={`filter-toggle-btn ${showMobileFilters ? 'active' : ''}`}
+                  onClick={() => setShowMobileFilters(!showMobileFilters)}
+                  aria-label="Toggle filters"
+                >
+                  {showMobileFilters ? 'Hide Filters ✕' : 'Filter & Price ⚙️'}
+                </button>
+                <p className="product-count">{filteredProducts.length} Products</p>
+              </div>
             </div>
 
             <div className="category-tabs">

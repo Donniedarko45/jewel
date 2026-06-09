@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { useCart } from '../context/CartContext';
 import logoImage from '../assets/logoDiva.png';
@@ -7,9 +8,19 @@ const NavigationBar = ({ showLogo = true }) => {
   const location = useLocation();
   const currentPath = location.pathname;
   const { cartCount, setIsCartOpen } = useCart();
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
+  const toggleMobileMenu = () => {
+    setIsMobileMenuOpen(!isMobileMenuOpen);
+  };
+
+  const closeMobileMenu = () => {
+    setIsMobileMenuOpen(false);
+  };
 
   const scrollToAbout = (e) => {
     e.preventDefault();
+    closeMobileMenu();
     const about = document.getElementById('about');
     if (about) {
       about.scrollIntoView({ behavior: 'smooth' });
@@ -21,6 +32,7 @@ const NavigationBar = ({ showLogo = true }) => {
 
   const scrollToFooter = (e) => {
     e.preventDefault();
+    closeMobileMenu();
     const footer = document.querySelector('.footer');
     if (footer) {
       footer.scrollIntoView({ behavior: 'smooth' });
@@ -55,11 +67,47 @@ const NavigationBar = ({ showLogo = true }) => {
           <button className="contact-btn" onClick={scrollToFooter}>Contact Us</button>
         </div>
 
-        <button className="nav-cart-btn" onClick={() => setIsCartOpen(true)} aria-label="Open cart">
-          🛒
-          {cartCount > 0 && <span className="nav-cart-badge">{cartCount}</span>}
-        </button>
+        <div className="nav-actions">
+          <button className="nav-cart-btn" onClick={() => setIsCartOpen(true)} aria-label="Open cart">
+            🛒
+            {cartCount > 0 && <span className="nav-cart-badge">{cartCount}</span>}
+          </button>
+
+          <button 
+            className="nav-hamburger-btn" 
+            onClick={toggleMobileMenu} 
+            aria-label="Toggle navigation menu"
+            aria-expanded={isMobileMenuOpen}
+          >
+            <span className={`hamburger-line ${isMobileMenuOpen ? 'open' : ''}`}></span>
+            <span className={`hamburger-line ${isMobileMenuOpen ? 'open' : ''}`}></span>
+            <span className={`hamburger-line ${isMobileMenuOpen ? 'open' : ''}`}></span>
+          </button>
+        </div>
       </div>
+
+      {/* Mobile Drawer Navigation */}
+      <div className={`nav-mobile-drawer ${isMobileMenuOpen ? 'open' : ''}`}>
+        <button className="drawer-close" onClick={closeMobileMenu} aria-label="Close menu">×</button>
+        <div className="drawer-logo">
+          <img src={logoImage} alt="Diva & Co." className="drawer-logo-img" />
+        </div>
+        <ul className="drawer-links">
+          <li className={currentPath === '/' ? 'active' : ''}>
+            <Link to="/" onClick={closeMobileMenu}>Home</Link>
+          </li>
+          <li>
+            <a href="#about" onClick={scrollToAbout}>About Us</a>
+          </li>
+          <li className={currentPath === '/products' ? 'active' : ''}>
+            <Link to="/products" onClick={closeMobileMenu}>Collections</Link>
+          </li>
+          <li>
+            <a href="#contact" onClick={scrollToFooter}>Contact Us</a>
+          </li>
+        </ul>
+      </div>
+      <div className={`drawer-overlay ${isMobileMenuOpen ? 'open' : ''}`} onClick={closeMobileMenu} />
     </nav>
   );
 };

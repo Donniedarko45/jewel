@@ -172,3 +172,35 @@
     flex-wrap: wrap;
   }
 }
+
+@media (max-width: 480px) {
+  .category-showcase {
+    padding: var(--spacing-xl) 0;
+  }
+
+  .category-left-image {
+    height: 280px;
+  }
+
+  .category-heading {
+    font-size: 2rem;
+  }
+
+  .category-desc {
+    margin-bottom: 2rem;
+  }
+
+  .category-circles {
+    gap: 1.5rem;
+  }
+
+  .circle-image {
+    width: 80px;
+    height: 80px;
+    border-width: 2px;
+  }
+
+  .circle-name {
+    font-size: 0.95rem;
+  }
+}
