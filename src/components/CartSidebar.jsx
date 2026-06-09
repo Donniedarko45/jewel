@@ -46,7 +46,7 @@ const CartSidebar = () => {
 
     // Encode text and WhatsApp link (prefixed with country code 91)
     const encodedText = encodeURIComponent(text);
-    const whatsappUrl = `https://wa.me/919876543210?text=${encodedText}`;
+    const whatsappUrl = `https://wa.me/919758096789?text=${encodedText}`;
 
     // Open WhatsApp in a new tab
     window.open(whatsappUrl, '_blank');
@@ -145,7 +145,7 @@ const CartSidebar = () => {
                   name="phone"
                   value={formData.phone}
                   onChange={handleInputChange}
-                  placeholder="e.g., +91 98765 43210"
+                  placeholder="e.g., +91 97580 96789"
                   required
                 />
               </div>
