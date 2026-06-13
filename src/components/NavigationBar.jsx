@@ -40,7 +40,7 @@ const NavigationBar = ({ showLogo = true }) => {
   };
 
   return (
-    <nav className="navigation-bar">
+    <nav className={`navigation-bar ${currentPath === '/' ? 'home-nav' : 'inner-nav'}`}>
       <div className="nav-container">
         {showLogo ? (
           <div className="nav-logo">
