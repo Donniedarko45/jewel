@@ -60,11 +60,40 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  color: #999;
-  gap: 0.75rem;
+  padding: 2rem;
+  text-align: center;
+  gap: 0.6rem;
 }
-.cart-empty-icon { font-size: 2.5rem; }
-.cart-empty p { margin: 0; font-size: 1rem; }
+
+.cart-empty-svg-box {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  background-color: #FAF9F6;
+  border: 1px solid #E5DFD5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 0.5rem;
+}
+
+.cart-empty-heading {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: #1A1A1A;
+  margin: 0;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.cart-empty-subtext {
+  font-size: 0.82rem;
+  color: #7A756C;
+  margin: 0;
+  max-width: 240px;
+  line-height: 1.45;
+}
 
 .cart-items {
   flex: 1;

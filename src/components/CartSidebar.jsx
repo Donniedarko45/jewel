@@ -149,8 +149,15 @@ const CartSidebar = () => {
 
         {cartItems.length === 0 ? (
           <div className="cart-empty">
-            <span className="cart-empty-icon">🛒</span>
-            <p>Your cart is empty</p>
+            <div className="cart-empty-svg-box">
+              <svg viewBox="0 0 24 24" width="40" height="40" stroke="#B89B5E" strokeWidth="1.2" fill="none" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z" />
+                <line x1="3" y1="6" x2="21" y2="6" />
+                <path d="M16 10a4 4 0 0 1-8 0" />
+              </svg>
+            </div>
+            <h3 className="cart-empty-heading">Your cart is empty</h3>
+            <p className="cart-empty-subtext">Add premium pieces from our collections to get started.</p>
           </div>
         ) : (
           <>
