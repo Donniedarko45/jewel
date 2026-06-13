@@ -486,7 +486,7 @@ const ProductDetailPage = ({ productId }) => {
                   type="text"
                   placeholder="Enter 6-digit PIN Code"
                   value={pincode}
-                  onChange={(e) => setPincode(e.target.value)}
+                  onChange={(e) => setPincode(e.target.value.replace(/\D/g, ''))}
                   maxLength={6}
                 />
                 <button type="submit">Check</button>

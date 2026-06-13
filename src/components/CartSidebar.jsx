@@ -17,7 +17,25 @@ const CartSidebar = () => {
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setFormData(prev => ({ ...prev, [name]: value }));
+    let finalValue = value;
+
+    if (name === 'phone') {
+      // Keep only digits, limit length based on Indian phone formats
+      const digits = value.replace(/\D/g, '');
+      if (digits.startsWith('91')) {
+        finalValue = digits.slice(0, 12);
+      } else {
+        finalValue = digits.slice(0, 10);
+      }
+    } else if (name === 'pinCode') {
+      // Keep only digits, limit to 6 digits
+      finalValue = value.replace(/\D/g, '').slice(0, 6);
+    } else if (name === 'name' || name === 'city' || name === 'state') {
+      // Prevent numbers and special characters in text fields
+      finalValue = value.replace(/[^a-zA-Z\s]/g, '');
+    }
+
+    setFormData(prev => ({ ...prev, [name]: finalValue }));
     // Clear error dynamically as the user types
     if (errors[name]) {
       setErrors(prev => ({ ...prev, [name]: '' }));
