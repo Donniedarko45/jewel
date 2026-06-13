@@ -16,6 +16,12 @@ const ProductDetailPage = ({ productId }) => {
   const [reviewRating, setReviewRating] = useState(5);
   const [reviewName, setReviewName] = useState('');
   const [reviews, setReviews] = useState([]);
+  const [pincode, setPincode] = useState('');
+  const [deliveryMessage, setDeliveryMessage] = useState('');
+  const [isZooming, setIsZooming] = useState(false);
+  const [zoomStyle, setZoomStyle] = useState({ display: 'none' });
+  const [lensStyle, setLensStyle] = useState({ display: 'none' });
+
   const { addToCart } = useCart();
 
   useEffect(() => {
@@ -61,7 +67,6 @@ const ProductDetailPage = ({ productId }) => {
       setReviewName('');
       setReviewRating(5);
     } catch {
-      // Save locally even if API fails
       setReviews(updatedReviews);
       setReviewText('');
       setReviewName('');
@@ -69,12 +74,68 @@ const ProductDetailPage = ({ productId }) => {
     }
   };
 
+  const handleMouseMove = (e) => {
+    const { left, top, width, height } = e.currentTarget.getBoundingClientRect();
+    const x = ((e.clientX - left) / width) * 100;
+    const y = ((e.clientY - top) / height) * 100;
+
+    // Lens cursor placement
+    const lensWidth = 120;
+    const lensHeight = 120;
+    let lensX = e.clientX - left - lensWidth / 2;
+    let lensY = e.clientY - top - lensHeight / 2;
+
+    // Boundary check for lens
+    if (lensX < 0) lensX = 0;
+    if (lensY < 0) lensY = 0;
+    if (lensX > width - lensWidth) lensX = width - lensWidth;
+    if (lensY > height - lensHeight) lensY = height - lensHeight;
+
+    setIsZooming(true);
+    setLensStyle({
+      display: 'block',
+      left: `${lensX}px`,
+      top: `${lensY}px`,
+      width: `${lensWidth}px`,
+      height: `${lensHeight}px`
+    });
+
+    setZoomStyle({
+      display: 'block',
+      backgroundImage: `url(${images[selectedImage]})`,
+      backgroundPosition: `${x}% ${y}%`,
+      backgroundSize: '250%' // Zoom factor
+    });
+  };
+
+  const handleMouseLeave = () => {
+    setIsZooming(false);
+    setZoomStyle({ display: 'none' });
+    setLensStyle({ display: 'none' });
+  };
+
+  const handlePincodeCheck = (e) => {
+    e.preventDefault();
+    if (!/^\d{6}$/.test(pincode)) {
+      setDeliveryMessage('❌ Invalid PIN Code. Please enter a valid 6-digit number.');
+      return;
+    }
+
+    const firstDigit = parseInt(pincode.charAt(0));
+    const days = (firstDigit % 3) + 2; // Dynamic estimation
+    const date = new Date();
+    date.setDate(date.getDate() + days);
+    const dateString = date.toLocaleDateString('en-IN', { weekday: 'long', month: 'short', day: 'numeric' });
+
+    setDeliveryMessage(`🚚 Delivery available! Expected by ${dateString} (${days} days) | Cash on Delivery available.`);
+  };
+
   if (loading) {
     return (
       <div className="product-detail-page">
         <NavigationBar />
         <div className="detail-container">
-          <div className="loading-state">Loading product...</div>
+          <div className="loading-state">Loading product details...</div>
         </div>
       </div>
     );
@@ -98,16 +159,14 @@ const ProductDetailPage = ({ productId }) => {
     ? product.images.map(img => img.url || img)
     : [product.image].filter(Boolean);
 
-  const productPrice = typeof product.price === 'number'
-    ? `₹${product.price.toLocaleString('en-IN')}`
-    : product.price;
+  // Derive original price markup and discount percentage if missing
+  const calculatedOriginalPrice = product.originalPrice || Math.round(product.price * 1.4);
+  const discountPercentage = Math.round(((calculatedOriginalPrice - product.price) / calculatedOriginalPrice) * 100);
 
-  const originalPrice = product.originalPrice
-    ? `₹${product.originalPrice.toLocaleString('en-IN')}`
-    : null;
+  const displayPrice = `₹${product.price.toLocaleString('en-IN')}`;
+  const displayOriginalPrice = `₹${calculatedOriginalPrice.toLocaleString('en-IN')}`;
 
-  const isSale = originalPrice && product.originalPrice > product.price;
-  const inStock = product.inStock !== false;
+  const inStock = product.quantity > 0;
   const avgRating = reviews.length > 0
     ? (reviews.reduce((sum, r) => sum + r.rating, 0) / reviews.length).toFixed(1)
     : null;
@@ -115,6 +174,42 @@ const ProductDetailPage = ({ productId }) => {
   const handleAddToCart = () => {
     addToCart(product, quantity);
   };
+
+  const handleBuyNow = () => {
+    addToCart(product, quantity);
+    // addToCart automatically opens the CartSidebar with the WhatsApp checkout modal trigger
+  };
+
+  const getSpecs = () => {
+    const isGold = product.name?.toLowerCase().includes('gold') || product.description?.toLowerCase().includes('gold');
+    const isRose = product.name?.toLowerCase().includes('rose') || product.description?.toLowerCase().includes('rose');
+    const isSilver = product.name?.toLowerCase().includes('silver') || product.description?.toLowerCase().includes('silver');
+
+    let material = '18K Yellow Gold Plated Brass';
+    let color = 'Gold';
+
+    if (isRose) {
+      material = '18K Rose Gold Plated Brass';
+      color = 'Rose Gold';
+    } else if (isSilver) {
+      material = '925 Sterling Silver';
+      color = 'Silver';
+    } else if (isGold) {
+      material = '18K Yellow Gold Plated Brass';
+      color = 'Gold';
+    }
+
+    return [
+      { label: 'Material', value: material },
+      { label: 'Color', value: color },
+      { label: 'Finish', value: 'High Polish Mirror Finish' },
+      { label: 'Weight', value: product.type === 'bracelet' ? '7.2 g' : '4.6 g' },
+      { label: 'Warranty', value: '1-Year Anti-Tarnish Warranty' },
+      { label: 'Care Instructions', value: 'Avoid contact with chemicals, water, and perfume. Clean with dry soft cloth.' }
+    ];
+  };
+
+  const specsList = getSpecs();
 
   const renderStars = (rating, interactive = false, onChange = null) => {
     return (
@@ -132,125 +227,336 @@ const ProductDetailPage = ({ productId }) => {
     );
   };
 
+  const renderDetailedDescription = () => {
+    if (!product.description) return null;
+
+    const lines = product.description.split('\n').map(l => l.trim()).filter(Boolean);
+    
+    // Check if the majority of lines follow "Key: Value" format
+    const keyValueLines = lines.map(line => {
+      const colonIndex = line.indexOf(':');
+      if (colonIndex > 0) {
+        return {
+          key: line.substring(0, colonIndex).trim(),
+          value: line.substring(colonIndex + 1).trim()
+        };
+      }
+      return null;
+    }).filter(Boolean);
+
+    // If it's a structured key-value list
+    if (keyValueLines.length > 0 && keyValueLines.length >= lines.length - 1) {
+      // Define a map of key names to icons
+      const getIcon = (keyName) => {
+        const lower = keyName.toLowerCase();
+        if (lower.includes('material')) {
+          return (
+            <svg viewBox="0 0 24 24" width="20" height="20" stroke="#B89B5E" strokeWidth="1.5" fill="none" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" />
+            </svg>
+          );
+        }
+        if (lower.includes('finish') || lower.includes('plating')) {
+          return (
+            <svg viewBox="0 0 24 24" width="20" height="20" stroke="#B89B5E" strokeWidth="1.5" fill="none" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z" />
+              <path d="M2 12h20M12 2v20" />
+            </svg>
+          );
+        }
+        if (lower.includes('style') || lower.includes('trend')) {
+          return (
+            <svg viewBox="0 0 24 24" width="20" height="20" stroke="#B89B5E" strokeWidth="1.5" fill="none" strokeLinecap="round" strokeLinejoin="round">
+              <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
+            </svg>
+          );
+        }
+        if (lower.includes('design') || lower.includes('cuff')) {
+          return (
+            <svg viewBox="0 0 24 24" width="20" height="20" stroke="#B89B5E" strokeWidth="1.5" fill="none" strokeLinecap="round" strokeLinejoin="round">
+              <circle cx="12" cy="12" r="10" />
+              <path d="M8 12h8M12 8v8" />
+            </svg>
+          );
+        }
+        if (lower.includes('ideal') || lower.includes('for') || lower.includes('gender')) {
+          return (
+            <svg viewBox="0 0 24 24" width="20" height="20" stroke="#B89B5E" strokeWidth="1.5" fill="none" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+              <circle cx="9" cy="7" r="4" />
+              <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
+              <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+            </svg>
+          );
+        }
+        if (lower.includes('occasion')) {
+          return (
+            <svg viewBox="0 0 24 24" width="20" height="20" stroke="#B89B5E" strokeWidth="1.5" fill="none" strokeLinecap="round" strokeLinejoin="round">
+              <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
+              <line x1="16" y1="2" x2="16" y2="6" />
+              <line x1="8" y1="2" x2="8" y2="6" />
+              <line x1="3" y1="10" x2="21" y2="10" />
+            </svg>
+          );
+        }
+        // Fallback generic star icon
+        return (
+          <svg viewBox="0 0 24 24" width="20" height="20" stroke="#B89B5E" strokeWidth="1.5" fill="none" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83" />
+          </svg>
+        );
+      };
+
+      return (
+        <div className="premium-desc-container">
+          <div className="premium-desc-header">
+            <h3>Craftsmanship & Specifications</h3>
+            <p>Every piece at DIVA & Co. is designed with high precision, balancing timeless luxury with everyday longevity.</p>
+          </div>
+          <div className="premium-desc-grid">
+            {keyValueLines.map((line, index) => (
+              <div key={index} className="premium-desc-card">
+                <div className="premium-desc-icon-box">
+                  {getIcon(line.key)}
+                </div>
+                <div className="premium-desc-info">
+                  <span className="premium-desc-key">{line.key}</span>
+                  <span className="premium-desc-val">{line.value}</span>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      );
+    }
+
+    // Otherwise render as elegant paragraph
+    return (
+      <div className="premium-desc-plain-wrapper">
+        <p className="premium-desc-plain-text">{product.description}</p>
+      </div>
+    );
+  };
+
   return (
     <div className="product-detail-page">
       <NavigationBar />
 
       <div className="detail-container">
-        <Link to="/products" className="back-button">← Back to Products</Link>
+        {/* Breadcrumb */}
+        <div className="breadcrumb-nav">
+          <Link to="/">Home</Link>
+          <span className="separator">/</span>
+          <Link to="/products">Collections</Link>
+          <span className="separator">/</span>
+          <span className="current">{product.name}</span>
+        </div>
 
-        <div className="detail-content">
-          {/* Gallery */}
-          <div className="detail-gallery">
-            <div className="main-image-wrapper">
-              {isSale && <span className="sale-badge">Sale</span>}
-              <img src={images[selectedImage]} alt={product.name} className="main-image" />
-            </div>
-            {images.length > 1 && (
-              <div className="thumbnail-strip">
-                <button className="thumb-nav prev" onClick={() => setSelectedImage(Math.max(0, selectedImage - 1))}>‹</button>
-                <div className="thumbnail-list">
+        <div className="detail-content-grid">
+          {/* LEFT COLUMN: Gallery */}
+          <div className="detail-gallery-sticky">
+            <div className="gallery-layout-wrapper">
+              {/* Vertical thumbnail list */}
+              {images.length > 1 && (
+                <div className="vertical-thumbnail-strip">
                   {images.map((img, index) => (
-                    <div key={index} className={`thumbnail ${selectedImage === index ? 'active' : ''}`} onClick={() => setSelectedImage(index)}>
+                    <div
+                      key={index}
+                      className={`vertical-thumbnail ${selectedImage === index ? 'active' : ''}`}
+                      onClick={() => setSelectedImage(index)}
+                      onMouseEnter={() => setSelectedImage(index)}
+                    >
                       <img src={img} alt={`View ${index + 1}`} />
                     </div>
                   ))}
                 </div>
-                <button className="thumb-nav next" onClick={() => setSelectedImage(Math.min(images.length - 1, selectedImage + 1))}>›</button>
+              )}
+
+              {/* Main Image Viewport */}
+              <div
+                className="main-image-viewport"
+                onMouseMove={handleMouseMove}
+                onMouseLeave={handleMouseLeave}
+              >
+                {discountPercentage > 0 && <span className="discount-tag-badge">{discountPercentage}% OFF</span>}
+                <img src={images[selectedImage]} alt={product.name} className="main-image" />
+                
+                {/* Magnification Lens */}
+                <div className="zoom-lens-element" style={lensStyle} />
               </div>
-            )}
+            </div>
+            
+            {/* Magnifier result panel (floats contextually) */}
+            <div className="zoom-magnifier-result" style={zoomStyle} />
           </div>
 
-          {/* Product Info */}
-          <div className="detail-info">
-            <h1 className="product-title">{product.name}</h1>
+          {/* RIGHT COLUMN: Info details */}
+          <div className="detail-info-pane">
+            <div className="brand-badge">DIVA & CO.</div>
+            <h1 className="product-title-heading">{product.name}</h1>
 
-            {avgRating && (
-              <div className="rating-row">
-                {renderStars(Math.round(parseFloat(avgRating)))}
-                <span className="review-count">({reviews.length} {reviews.length === 1 ? 'review' : 'reviews'})</span>
+            {/* Ratings & Stock Status Row */}
+            <div className="ratings-status-row">
+              {avgRating ? (
+                <div className="rating-pill">
+                  <span>{avgRating}</span>
+                  <span className="star-char">★</span>
+                </div>
+              ) : (
+                <div className="rating-pill unrated">
+                  <span>New</span>
+                </div>
+              )}
+              <span className="review-pill-count">
+                {reviews.length} {reviews.length === 1 ? 'Customer Review' : 'Customer Reviews'}
+              </span>
+              <div className={`stock-status-pill ${inStock ? 'in-stock' : 'out-of-stock'}`}>
+                {inStock ? 'In Stock' : 'Out of Stock'}
               </div>
-            )}
-
-            <div className={`stock-status ${inStock ? 'in-stock' : 'out-of-stock'}`}>
-              {inStock ? 'In stock' : 'Out of stock'}
             </div>
 
-            <div className="price-row">
-              {originalPrice && <span className="original-price">{originalPrice}</span>}
-              <span className="current-price">{productPrice}</span>
+            {/* Price Block */}
+            <div className="price-block-card">
+              <span className="current-price-tag">{displayPrice}</span>
+              <span className="original-price-tag">{displayOriginalPrice}</span>
+              <span className="discount-percent-tag">{discountPercentage}% off</span>
             </div>
 
-            {/* About Product - short content near price */}
+            {/* Short Description snippet */}
             {product.aboutProduct && (
-              <p className="about-product-text">{product.aboutProduct}</p>
+              <div className="short-desc-highlight">
+                <p>{product.aboutProduct}</p>
+              </div>
             )}
 
-            <div className="cart-row">
-              <div className="quantity-controls">
-                <button onClick={() => setQuantity(Math.max(1, quantity - 1))}>−</button>
-                <span className="qty-value">{quantity}</span>
-                <button onClick={() => setQuantity(quantity + 1)}>+</button>
+            {/* Quantity Controls */}
+            {inStock && (
+              <div className="quantity-selection-wrapper">
+                <span className="qty-label">Quantity:</span>
+                <div className="quantity-selector-controls">
+                  <button onClick={() => setQuantity(Math.max(1, quantity - 1))} aria-label="Decrease quantity">−</button>
+                  <span className="qty-count-val">{quantity}</span>
+                  <button onClick={() => setQuantity(quantity + 1)} aria-label="Increase quantity">+</button>
+                </div>
               </div>
-              <button className="btn-add-to-cart" onClick={handleAddToCart} disabled={!inStock}>
+            )}
+
+            {/* Action Buttons Row */}
+            <div className="purchase-actions-container">
+              <button
+                className="btn-buy-now-primary"
+                onClick={handleBuyNow}
+                disabled={!inStock}
+              >
+                BUY NOW (ORDER VIA WHATSAPP 💬)
+              </button>
+              <button
+                className="btn-add-to-cart-secondary"
+                onClick={handleAddToCart}
+                disabled={!inStock}
+              >
                 ADD TO CART
               </button>
+            </div>
+
+            {/* Pincode & Delivery Checker */}
+            <div className="pincode-checker-block">
+              <h3>Delivery & Services</h3>
+              <form onSubmit={handlePincodeCheck} className="pincode-input-group">
+                <input
+                  type="text"
+                  placeholder="Enter 6-digit PIN Code"
+                  value={pincode}
+                  onChange={(e) => setPincode(e.target.value)}
+                  maxLength={6}
+                />
+                <button type="submit">Check</button>
+              </form>
+              {deliveryMessage && <p className="delivery-status-note">{deliveryMessage}</p>}
+              <div className="service-features-list">
+                <span>✓ 7 Days Easy Returns Placed via Chat</span>
+                <span>✓ Lifetime Quality Guarantee on Anti-Tarnish plating</span>
+              </div>
+            </div>
+
+            {/* Specifications Details Grid */}
+            <div className="specifications-details-card">
+              <h3>Specifications & Details</h3>
+              <div className="specs-table-grid">
+                {specsList.map((spec, index) => (
+                  <div key={index} className="specs-row-item">
+                    <span className="spec-label-name">{spec.label}</span>
+                    <span className="spec-value-detail">{spec.value}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Highlights bullet points */}
+            <div className="product-highlights-box">
+              <h3>Product Highlights</h3>
+              <ul className="highlights-bullet-points">
+                <li>Anti-Tarnish technology guarantees long-lasting everyday shine.</li>
+                <li>Hypoallergenic, skin-friendly material suitable for sensitive skin.</li>
+                <li>Perfect gift selection including premium Diva & Co. signature jewelry boxes.</li>
+                <li>Elegant minimal structure that fits seamlessly from formal to casual occasions.</li>
+              </ul>
             </div>
           </div>
         </div>
 
-        {/* Tabs: Description + Reviews */}
-        <div className="tabs-section">
-          <div className="tabs-nav">
+        {/* Bottom Tabs Section: Full Description + Review list */}
+        <div className="tabs-description-reviews-section">
+          <div className="details-tab-nav-bar">
             <button
-              className={`tab-btn ${activeTab === 'description' ? 'active' : ''}`}
+              className={`details-tab-header-btn ${activeTab === 'description' ? 'active' : ''}`}
               onClick={() => setActiveTab('description')}
             >
-              Description
+              Detailed Description
             </button>
             <button
-              className={`tab-btn ${activeTab === 'reviews' ? 'active' : ''}`}
+              className={`details-tab-header-btn ${activeTab === 'reviews' ? 'active' : ''}`}
               onClick={() => setActiveTab('reviews')}
             >
-              Reviews ({reviews.length})
+              Customer Reviews ({reviews.length})
             </button>
           </div>
 
-          <div className="tab-content">
+          <div className="details-tab-pane-content">
             {activeTab === 'description' && (
-              <div className="tab-pane">
-                <p>{product.description}</p>
+              <div className="description-pane-content">
+                {renderDetailedDescription()}
               </div>
             )}
 
             {activeTab === 'reviews' && (
-              <div className="tab-pane reviews-pane">
+              <div className="reviews-pane-content">
                 {reviews.length > 0 ? (
-                  <div className="reviews-list">
+                  <div className="pdp-reviews-list">
                     {reviews.map((review, idx) => (
-                      <div key={idx} className="review-card">
-                        <div className="review-top">
-                          <div className="review-author">
-                            <div className="review-avatar">{review.name.charAt(0).toUpperCase()}</div>
+                      <div key={idx} className="pdp-review-card-item">
+                        <div className="pdp-review-card-header">
+                          <div className="reviewer-profile-info">
+                            <div className="reviewer-avatar-char">{review.name.charAt(0).toUpperCase()}</div>
                             <div>
-                              <span className="reviewer-name">{review.name}</span>
-                              <span className="review-date">{new Date(review.date).toLocaleDateString('en-IN', { year: 'numeric', month: 'short', day: 'numeric' })}</span>
+                              <span className="reviewer-name-label">{review.name}</span>
+                              <span className="reviewer-date-stamp">{new Date(review.date).toLocaleDateString('en-IN', { year: 'numeric', month: 'short', day: 'numeric' })}</span>
                             </div>
                           </div>
                           {renderStars(review.rating)}
                         </div>
-                        <p className="review-comment">{review.comment}</p>
+                        <p className="pdp-reviewer-comment-text">{review.comment}</p>
                       </div>
                     ))}
                   </div>
                 ) : (
-                  <p className="no-reviews">No reviews yet. Be the first to review this product.</p>
+                  <p className="no-reviews-tagline">No reviews yet. Be the first to share your thoughts on this product!</p>
                 )}
 
-                <div className="review-form-wrapper">
-                  <h4>Write a Review</h4>
-                  <form onSubmit={handleSubmitReview} className="review-form">
-                    <div className="review-form-row">
+                <div className="write-review-pdp-form">
+                  <h3>Submit a Product Review</h3>
+                  <form onSubmit={handleSubmitReview} className="review-input-form">
+                    <div className="form-double-row-inputs">
                       <input
                         type="text"
                         placeholder="Your name"
@@ -258,19 +564,19 @@ const ProductDetailPage = ({ productId }) => {
                         onChange={(e) => setReviewName(e.target.value)}
                         required
                       />
-                      <div className="rating-select">
-                        <span className="rating-label">Rating:</span>
+                      <div className="pdp-rating-input-selector">
+                        <span>Rating:</span>
                         {renderStars(reviewRating, true, setReviewRating)}
                       </div>
                     </div>
                     <textarea
-                      placeholder="Share your experience with this product..."
+                      placeholder="Write your detailed product experience here..."
                       value={reviewText}
                       onChange={(e) => setReviewText(e.target.value)}
                       rows="4"
                       required
                     />
-                    <button type="submit" className="btn-submit-review">Submit Review</button>
+                    <button type="submit" className="btn-pdp-submit-review">Publish Review</button>
                   </form>
                 </div>
               </div>
