@@ -166,7 +166,7 @@ const ProductDetailPage = ({ productId }) => {
   const displayPrice = `₹${product.price.toLocaleString('en-IN')}`;
   const displayOriginalPrice = `₹${calculatedOriginalPrice.toLocaleString('en-IN')}`;
 
-  const inStock = product.quantity > 0;
+  const inStock = product.inStock !== undefined ? product.inStock : (product.quantity > 0);
   const avgRating = reviews.length > 0
     ? (reviews.reduce((sum, r) => sum + r.rating, 0) / reviews.length).toFixed(1)
     : null;
@@ -181,6 +181,25 @@ const ProductDetailPage = ({ productId }) => {
   };
 
   const getSpecs = () => {
+    // If the description contains key-value pairs, let's extract them to display real specs
+    const lines = product.description ? product.description.split('\n').map(l => l.trim()).filter(Boolean) : [];
+    const keyValueLines = lines.map(line => {
+      const colonIndex = line.indexOf(':');
+      if (colonIndex > 0) {
+        return {
+          label: line.substring(0, colonIndex).trim(),
+          value: line.substring(colonIndex + 1).trim()
+        };
+      }
+      return null;
+    }).filter(Boolean);
+
+    // If we have parsed specs from the description, use them!
+    if (keyValueLines.length > 0) {
+      return keyValueLines;
+    }
+
+    // Otherwise, fall back to the dynamic default generator
     const isGold = product.name?.toLowerCase().includes('gold') || product.description?.toLowerCase().includes('gold');
     const isRose = product.name?.toLowerCase().includes('rose') || product.description?.toLowerCase().includes('rose');
     const isSilver = product.name?.toLowerCase().includes('silver') || product.description?.toLowerCase().includes('silver');

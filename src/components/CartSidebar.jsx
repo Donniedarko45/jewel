@@ -13,19 +13,73 @@ const CartSidebar = () => {
     state: '',
     pinCode: ''
   });
+  const [errors, setErrors] = useState({});
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData(prev => ({ ...prev, [name]: value }));
+    // Clear error dynamically as the user types
+    if (errors[name]) {
+      setErrors(prev => ({ ...prev, [name]: '' }));
+    }
+  };
+
+  const validateForm = () => {
+    const newErrors = {};
+    const { name, phone, address, city, pinCode } = formData;
+
+    // Name check: min 3 chars, letters only
+    if (!name.trim()) {
+      newErrors.name = 'Full Name is required';
+    } else if (name.trim().length < 3) {
+      newErrors.name = 'Name must be at least 3 characters long';
+    } else if (!/^[a-zA-Z\s]+$/.test(name.trim())) {
+      newErrors.name = 'Name can only contain alphabetic letters and spaces';
+    }
+
+    // Phone check: 10 digit Indian mobile numbers
+    const cleanedPhone = phone.replace(/\D/g, '');
+    if (!phone.trim()) {
+      newErrors.phone = 'Phone Number is required';
+    } else {
+      const isValid = (cleanedPhone.length === 10 && /^[6-9]/.test(cleanedPhone)) || 
+                      (cleanedPhone.length === 12 && cleanedPhone.startsWith('91') && /^[6-9]/.test(cleanedPhone.slice(2)));
+      if (!isValid) {
+        newErrors.phone = 'Enter a valid 10-digit mobile number (e.g., 9876543210)';
+      }
+    }
+
+    // Address check: min 8 characters
+    if (!address.trim()) {
+      newErrors.address = 'Shipping Address is required';
+    } else if (address.trim().length < 8) {
+      newErrors.address = 'Please enter a complete address (minimum 8 characters)';
+    }
+
+    // City check: min 3 characters
+    if (!city.trim()) {
+      newErrors.city = 'City is required';
+    } else if (city.trim().length < 3) {
+      newErrors.city = 'City must be at least 3 characters';
+    }
+
+    // PIN Code check: exactly 6 digits
+    if (!pinCode.trim()) {
+      newErrors.pinCode = 'PIN Code is required';
+    } else if (!/^\d{6}$/.test(pinCode.trim())) {
+      newErrors.pinCode = 'Enter a valid 6-digit PIN Code (e.g., 110001)';
+    }
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
   };
 
   const handleCheckoutSubmit = (e) => {
     e.preventDefault();
-    const { name, phone, address, city, state, pinCode } = formData;
-    if (!name || !phone || !address || !city || !pinCode) {
-      alert('Please fill out all required fields');
+    if (!validateForm()) {
       return;
     }
+    const { name, phone, address, city, state, pinCode } = formData;
 
     // Format products text
     const itemsText = cartItems.map(item => 
@@ -61,6 +115,7 @@ const CartSidebar = () => {
       state: '',
       pinCode: ''
     });
+    setErrors({});
     setIsCheckoutOpen(false);
     setIsCartOpen(false);
   };
@@ -123,18 +178,20 @@ const CartSidebar = () => {
               <p>Please enter your details to route your order request directly to WhatsApp.</p>
             </div>
             
-            <form onSubmit={handleCheckoutSubmit} className="checkout-form">
+            <form onSubmit={handleCheckoutSubmit} className="checkout-form" noValidate>
               <div className="form-group">
                 <label htmlFor="checkout-name">Full Name *</label>
                 <input
                   type="text"
                   id="checkout-name"
                   name="name"
+                  className={errors.name ? 'input-has-error' : ''}
                   value={formData.name}
                   onChange={handleInputChange}
                   placeholder="e.g., John Doe"
                   required
                 />
+                {errors.name && <span className="error-message-label">{errors.name}</span>}
               </div>
 
               <div className="form-group">
@@ -143,11 +200,13 @@ const CartSidebar = () => {
                   type="tel"
                   id="checkout-phone"
                   name="phone"
+                  className={errors.phone ? 'input-has-error' : ''}
                   value={formData.phone}
                   onChange={handleInputChange}
-                  placeholder="e.g., +91 97580 96789"
+                  placeholder="e.g., 9876543210"
                   required
                 />
+                {errors.phone && <span className="error-message-label">{errors.phone}</span>}
               </div>
 
               <div className="form-group">
@@ -155,12 +214,14 @@ const CartSidebar = () => {
                 <textarea
                   id="checkout-address"
                   name="address"
+                  className={errors.address ? 'input-has-error' : ''}
                   value={formData.address}
                   onChange={handleInputChange}
                   placeholder="Street, Building, Apartment, etc."
                   rows="3"
                   required
                 />
+                {errors.address && <span className="error-message-label">{errors.address}</span>}
               </div>
 
               <div className="form-row-compact">
@@ -170,11 +231,13 @@ const CartSidebar = () => {
                     type="text"
                     id="checkout-city"
                     name="city"
+                    className={errors.city ? 'input-has-error' : ''}
                     value={formData.city}
                     onChange={handleInputChange}
                     placeholder="e.g., Gurugram"
                     required
                   />
+                  {errors.city && <span className="error-message-label">{errors.city}</span>}
                 </div>
 
                 <div className="form-group">
@@ -195,11 +258,13 @@ const CartSidebar = () => {
                     type="text"
                     id="checkout-pin"
                     name="pinCode"
+                    className={errors.pinCode ? 'input-has-error' : ''}
                     value={formData.pinCode}
                     onChange={handleInputChange}
                     placeholder="e.g., 122001"
                     required
                   />
+                  {errors.pinCode && <span className="error-message-label">{errors.pinCode}</span>}
                 </div>
               </div>
 
