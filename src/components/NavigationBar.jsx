@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { useCart } from '../context/CartContext';
 import logoImage from '../assets/logoDiva.png';
@@ -9,6 +9,16 @@ const NavigationBar = ({ showLogo = true }) => {
   const currentPath = location.pathname;
   const { cartCount, setIsCartOpen } = useCart();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const isDarkPage = currentPath === '/products' || currentPath.startsWith('/product/');
+  const [animateBadge, setAnimateBadge] = useState(false);
+
+  useEffect(() => {
+    if (cartCount > 0) {
+      setAnimateBadge(true);
+      const timer = setTimeout(() => setAnimateBadge(false), 300);
+      return () => clearTimeout(timer);
+    }
+  }, [cartCount]);
 
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
@@ -40,7 +50,7 @@ const NavigationBar = ({ showLogo = true }) => {
   };
 
   return (
-    <nav className={`navigation-bar ${currentPath === '/' ? 'home-nav' : 'inner-nav'}`}>
+    <nav className={`navigation-bar ${currentPath === '/' ? 'home-nav' : isDarkPage ? 'dark-nav' : 'inner-nav'}`}>
       <div className="nav-container">
         {showLogo ? (
           <div className="nav-logo">
@@ -70,7 +80,11 @@ const NavigationBar = ({ showLogo = true }) => {
         <div className="nav-actions">
           <button className="nav-cart-btn" onClick={() => setIsCartOpen(true)} aria-label="Open cart">
             🛒
-            {cartCount > 0 && <span className="nav-cart-badge">{cartCount}</span>}
+            {cartCount > 0 && (
+              <span className={`nav-cart-badge ${animateBadge ? 'bounce-pop' : ''}`}>
+                {cartCount}
+              </span>
+            )}
           </button>
 
           <button 

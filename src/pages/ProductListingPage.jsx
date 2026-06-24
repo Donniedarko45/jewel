@@ -179,7 +179,18 @@ const ProductListingPage = () => {
           </div>
 
           {loading ? (
-            <div className="loading-state">Loading products...</div>
+            <div className="skeleton-grid">
+              {[...Array(6)].map((_, idx) => (
+                <div key={idx} className="skeleton-card">
+                  <div className="skeleton-image shimmer"></div>
+                  <div className="skeleton-body">
+                    <div className="skeleton-title shimmer"></div>
+                    <div className="skeleton-price shimmer"></div>
+                    <div className="skeleton-button shimmer"></div>
+                  </div>
+                </div>
+              ))}
+            </div>
           ) : filteredProducts.length === 0 ? (
             <div className="loading-state">No products found</div>
           ) : (

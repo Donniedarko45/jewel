@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useCart } from '../context/CartContext';
 import './CartSidebar.css';
 
@@ -14,6 +14,45 @@ const CartSidebar = () => {
     pinCode: ''
   });
   const [errors, setErrors] = useState({});
+  const [isValidatingPin, setIsValidatingPin] = useState(false);
+  const [pinVerified, setPinVerified] = useState(false);
+
+  useEffect(() => {
+    if (formData.pinCode.length === 6) {
+      checkPinCode(formData.pinCode);
+    } else {
+      setPinVerified(false);
+    }
+  }, [formData.pinCode]);
+
+  const checkPinCode = async (pin) => {
+    setIsValidatingPin(true);
+    setErrors(prev => ({ ...prev, pinCode: '' }));
+    try {
+      const response = await fetch(`https://api.postalpincode.in/pincode/${pin}`);
+      const data = await response.json();
+      if (data && data[0] && data[0].Status === 'Success') {
+        setPinVerified(true);
+        const postOffice = data[0].PostOffice?.[0];
+        if (postOffice) {
+          setFormData(prev => ({
+            ...prev,
+            city: prev.city || postOffice.District,
+            state: prev.state || postOffice.State
+          }));
+          setErrors(prev => ({ ...prev, city: '', state: '' }));
+        }
+      } else {
+        setPinVerified(false);
+        setErrors(prev => ({ ...prev, pinCode: '❌ Invalid PIN Code or not serviceable' }));
+      }
+    } catch (error) {
+      console.error('Pincode check error:', error);
+      setPinVerified(true); // Fallback to let user proceed in case API fails
+    } finally {
+      setIsValidatingPin(false);
+    }
+  };
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -86,6 +125,8 @@ const CartSidebar = () => {
       newErrors.pinCode = 'PIN Code is required';
     } else if (!/^\d{6}$/.test(pinCode.trim())) {
       newErrors.pinCode = 'Enter a valid 6-digit PIN Code (e.g., 110001)';
+    } else if (!pinVerified && !isValidatingPin) {
+      newErrors.pinCode = '❌ Invalid PIN Code or not serviceable';
     }
 
     setErrors(newErrors);
@@ -94,6 +135,10 @@ const CartSidebar = () => {
 
   const handleCheckoutSubmit = (e) => {
     e.preventDefault();
+    if (isValidatingPin) {
+      alert('We are verifying your PIN Code. Please wait...');
+      return;
+    }
     if (!validateForm()) {
       return;
     }

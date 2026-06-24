@@ -1,6 +1,6 @@
 .product-listing-page {
   min-height: 100vh;
-  background-color: #f8f6f1;
+  background-color: #0A0908; /* Deep rich charcoal black */
   padding-top: 80px;
 }
 
@@ -37,7 +37,7 @@
 .listing-header h1 {
   font-family: 'Cormorant Garamond', serif;
   font-size: 2rem;
-  color: #1a1a1a;
+  color: #FFFFFF;
   margin: 0;
   font-weight: 500;
   font-style: italic;
@@ -45,7 +45,7 @@
 
 .product-count {
   font-size: 0.9rem;
-  color: #888;
+  color: #B5A89E;
   margin: 0;
 }
 
@@ -57,29 +57,29 @@
 
 .category-tab {
   padding: 0.55rem 1.25rem;
-  background: #fff;
-  border: 1.5px solid #e0e0e0;
+  background: #161413;
+  border: 1.5px solid rgba(212, 165, 116, 0.15);
   border-radius: 24px;
   font-size: 0.85rem;
   font-weight: 500;
-  color: #666;
+  color: #D3CDC2;
   cursor: pointer;
   transition: all 0.25s;
 }
 .category-tab:hover {
-  border-color: #c9a961;
-  color: #c9a961;
+  border-color: #D4A574;
+  color: #D4A574;
 }
 .category-tab.active {
-  background: #5d4a3c;
-  border-color: #5d4a3c;
+  background: linear-gradient(135deg, #C5A880 0%, #8A6E4B 100%);
+  border-color: transparent;
   color: #fff;
 }
 
 .loading-state {
   text-align: center;
   padding: 3rem;
-  color: #999;
+  color: #B5A89E;
   font-size: 0.95rem;
 }
 
@@ -106,31 +106,29 @@
 
 /* Dark theme collection header */
 .collection-header-dark {
-  background-color: #0E0C0B; /* Deep rich charcoal black */
-  padding: 2.5rem 1.5rem 2rem;
-  border-radius: 12px;
+  background-color: transparent; /* Seamless transparent header */
+  padding: 1.5rem 0 1.2rem;
   text-align: center;
-  margin-bottom: 2rem;
-  box-shadow: var(--shadow-lg);
-  border: 1px solid rgba(212, 165, 116, 0.08);
+  margin-bottom: 1.5rem;
 }
 
 .collection-header-dark h2 {
   font-family: var(--font-heading);
-  font-size: 2.4rem;
+  font-size: 2.6rem;
   color: #FFFFFF;
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.4rem;
   font-weight: 400;
-  letter-spacing: 0.02em;
+  letter-spacing: 0.04em;
 }
 
 .collection-header-dark p {
   font-family: var(--font-body);
   font-size: 0.95rem;
   color: #B5A89E;
-  margin-bottom: 1.8rem;
+  margin-bottom: 1.5rem;
   font-weight: 300;
-  letter-spacing: 0.05em;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
 }
 
 /* Category Pills Row */
@@ -172,12 +170,13 @@
 .filter-sort-price-bar {
   display: flex;
   background-color: #161413;
-  border: 1px solid rgba(212, 165, 116, 0.15);
+  border: 1px solid rgba(212, 165, 116, 0.2);
   border-radius: 8px;
   max-width: 500px;
   margin: 0 auto;
   overflow: hidden;
   position: relative;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.3);
 }
 
 .bar-action-btn {
@@ -194,7 +193,7 @@
   font-weight: 500;
   cursor: pointer;
   transition: all 0.2s ease;
-  border-right: 1px solid rgba(212, 165, 116, 0.15);
+  border-right: 1px solid rgba(212, 165, 116, 0.2);
   outline: none;
 }
 
@@ -241,7 +240,7 @@
   border: 1px solid rgba(212, 165, 116, 0.2);
   border-radius: 8px;
   margin-top: 0.4rem;
-  box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+  box-shadow: 0 12px 30px rgba(0,0,0,0.6);
   z-index: 50;
   padding: 1.2rem;
   text-align: left;
@@ -366,5 +365,84 @@
     opacity: 1;
     margin-bottom: 1.5rem;
     overflow: visible;
+  }
+}
+
+/* Shimmer Loading Skeletons */
+.skeleton-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 2rem;
+  padding: 1rem 0;
+}
+
+.skeleton-card {
+  background: #161413;
+  border-radius: 4px;
+  overflow: hidden;
+  border: 1px solid rgba(212, 165, 116, 0.15);
+}
+
+.skeleton-image {
+  aspect-ratio: 1/1;
+  background: #2E2724;
+}
+
+.skeleton-body {
+  padding: 0.9rem 0.75rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.skeleton-title {
+  height: 1.2rem;
+  width: 80%;
+  background: #2E2724;
+  border-radius: 2px;
+}
+
+.skeleton-price {
+  height: 1rem;
+  width: 40%;
+  background: #2E2724;
+  border-radius: 2px;
+}
+
+.skeleton-button {
+  height: 2.2rem;
+  width: 100%;
+  background: #2E2724;
+  border-radius: 3px;
+  margin-top: 0.2rem;
+}
+
+.shimmer {
+  background: linear-gradient(90deg, #161413 25%, #2E2724 50%, #161413 75%);
+  background-size: 200% 100%;
+  animation: shimmer-load 1.5s infinite linear;
+}
+
+@keyframes shimmer-load {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+@media (max-width: 640px) {
+  .skeleton-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.75rem;
+    padding: 0.5rem 0;
+  }
+  .skeleton-body {
+    padding: 0.65rem 0.5rem;
+  }
+  .skeleton-button {
+    height: 1.8rem;
   }
 }

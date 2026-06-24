@@ -1,10 +1,11 @@
 .sidebar {
-  background: #fff;
+  background: #161413; /* Nested dark card background */
   padding: 1.25rem;
   border-radius: 8px;
-  border: 1px solid #eee;
+  border: 1px solid rgba(212, 165, 116, 0.15); /* Refined gold border */
   position: sticky;
   top: 96px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
 }
 
 .sidebar-title {
@@ -12,7 +13,7 @@
   font-size: 1.6rem;
   font-weight: 500;
   margin: 0 0 1.25rem;
-  color: #1a1a1a;
+  color: #FFFFFF;
   position: relative;
   padding-bottom: 0.6rem;
 }
@@ -21,13 +22,13 @@
   position: absolute;
   bottom: 0; left: 0;
   width: 45px; height: 2px;
-  background: #c9a961;
+  background: #B89B5E; /* Gold underline */
 }
 
 .filter-section {
   margin-bottom: 1.25rem;
   padding-bottom: 1.25rem;
-  border-bottom: 1px solid #f0f0f0;
+  border-bottom: 1px solid rgba(212, 165, 116, 0.1);
 }
 .filter-section:last-child {
   border-bottom: none;
@@ -38,9 +39,10 @@
 .filter-header {
   font-size: 0.9rem;
   font-weight: 600;
-  color: #1a1a1a;
+  color: #D3CDC2;
   margin-bottom: 0.75rem;
-  letter-spacing: 0.02em;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
 }
 
 .filter-content {
@@ -55,16 +57,16 @@
   gap: 0.6rem;
   cursor: pointer;
   font-size: 0.88rem;
-  color: #555;
+  color: #B5A89E;
   padding: 0.2rem 0;
   transition: color 0.2s;
 }
-.filter-option:hover { color: #1a1a1a; }
+.filter-option:hover { color: #FFFFFF; }
 
 .filter-option input[type="checkbox"] {
   width: 16px; height: 16px;
   cursor: pointer;
-  accent-color: #c9a961;
+  accent-color: #B89B5E;
 }
 
 .price-slider {
@@ -73,7 +75,7 @@
 .price-slider input[type="range"] {
   width: 100%;
   height: 4px;
-  background: #e0e0e0;
+  background: #2E2724;
   border-radius: 2px;
   outline: none;
   -webkit-appearance: none;
@@ -82,26 +84,26 @@
 .price-slider input[type="range"]::-webkit-slider-thumb {
   -webkit-appearance: none;
   width: 16px; height: 16px;
-  background: #c9a961;
-  border: 2px solid #fff;
+  background: #B89B5E;
+  border: 2px solid #161413;
   border-radius: 50%;
   cursor: pointer;
-  box-shadow: 0 1px 4px rgba(0,0,0,0.15);
+  box-shadow: 0 1px 4px rgba(0,0,0,0.3);
 }
 .price-slider input[type="range"]::-moz-range-thumb {
   width: 16px; height: 16px;
-  background: #c9a961;
-  border: 2px solid #fff;
+  background: #B89B5E;
+  border: 2px solid #161413;
   border-radius: 50%;
   cursor: pointer;
-  box-shadow: 0 1px 4px rgba(0,0,0,0.15);
+  box-shadow: 0 1px 4px rgba(0,0,0,0.3);
 }
 .price-labels {
   display: flex;
   justify-content: space-between;
   margin-top: 0.5rem;
   font-size: 0.85rem;
-  color: #1a1a1a;
+  color: #FFFFFF;
   font-weight: 600;
 }
 
@@ -109,5 +111,6 @@
   .sidebar {
     position: static;
     padding: 1.25rem;
+    background: #161413;
   }
 }

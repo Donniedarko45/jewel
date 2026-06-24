@@ -80,6 +80,21 @@ const ProductDetailPage = ({ productId }) => {
     setLensStyle({ display: 'none' });
   };
 
+  const handleCarouselScroll = (e) => {
+    const scrollLeft = e.target.scrollLeft;
+    const width = e.target.clientWidth;
+    const index = Math.round(scrollLeft / width);
+    if (index !== selectedImage) {
+      setSelectedImage(index);
+    }
+  };
+
+  const handleShareProduct = () => {
+    const productUrl = window.location.href;
+    const shareText = `Check out this gorgeous piece from DIVA & Co.: *${product.name}*\n\nPrice: ${displayPrice}\n\nLink: ${productUrl}`;
+    window.open(`https://wa.me/?text=${encodeURIComponent(shareText)}`, '_blank');
+  };
+
   const handlePincodeCheck = async (e) => {
     e.preventDefault();
     if (!/^\d{6}$/.test(pincode)) {
@@ -376,6 +391,33 @@ const ProductDetailPage = ({ productId }) => {
                 <div className="zoom-lens-element" style={lensStyle} />
               </div>
             </div>
+
+            {/* Mobile swipeable carousel */}
+            <div className="mobile-image-carousel" onScroll={handleCarouselScroll}>
+              {images.map((img, index) => (
+                <div key={index} className="mobile-carousel-slide">
+                  <img src={img} alt={`Slide ${index + 1}`} />
+                </div>
+              ))}
+            </div>
+
+            {images.length > 1 && (
+              <div className="carousel-dots">
+                {images.map((_, index) => (
+                  <span 
+                    key={index} 
+                    className={`carousel-dot ${selectedImage === index ? 'active' : ''}`}
+                    onClick={() => {
+                      setSelectedImage(index);
+                      const container = document.querySelector('.mobile-image-carousel');
+                      if (container) {
+                        container.scrollLeft = index * container.clientWidth;
+                      }
+                    }}
+                  />
+                ))}
+              </div>
+            )}
             
             {/* Magnifier result panel (floats contextually) */}
             <div className="zoom-magnifier-result" style={zoomStyle} />
@@ -431,6 +473,14 @@ const ProductDetailPage = ({ productId }) => {
                 ADD TO CART
               </button>
             </div>
+
+            {/* Share product on WhatsApp button */}
+            <button className="btn-share-whatsapp" onClick={handleShareProduct}>
+              <span>Share this piece on WhatsApp</span>
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" style={{ marginLeft: '6px' }}>
+                <path d="M12.012 2c-5.506 0-9.988 4.482-9.988 9.988 0 1.761.46 3.473 1.333 4.985l-1.42 5.187 5.308-1.393c1.46.797 3.09 1.217 4.757 1.219h.004c5.503 0 9.988-4.485 9.988-9.99 0-2.667-1.037-5.176-2.923-7.062a9.92 9.92 0 0 0-7.059-2.926zm5.824 13.914c-.319.897-1.579 1.637-2.186 1.762-.513.104-1.18.172-3.37-.743-2.793-1.166-4.576-4.004-4.717-4.188-.139-.185-1.127-1.498-1.127-2.859 0-1.361.713-2.029.967-2.298.254-.27.553-.338.737-.338.185 0 .37.002.531.009.167.008.393-.064.615.467.228.544.778 1.895.846 2.03.067.137.113.297.021.482-.092.185-.138.298-.276.462-.139.165-.292.368-.417.493-.139.137-.284.287-.123.563.161.277.717 1.182 1.537 1.913.82.73 1.512.956 1.79.1.277-.138.553-.37.691-.553.139-.185.276-.139.462-.069.185.069 1.18.555 1.385.659.206.104.343.155.393.242.051.087.051.503-.138 1.402z" />
+              </svg>
+            </button>
 
             {/* Pincode & Delivery Checker */}
             <div className="pincode-checker-block">
