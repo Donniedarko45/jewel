@@ -401,3 +401,19 @@
 .navigation-bar.dark-nav .drawer-logo {
   border-bottom: 1px solid rgba(212, 165, 116, 0.15);
 }
+
+.navigation-bar.dark-nav .nav-menu-pill {
+  background-color: rgba(22, 20, 19, 0.98);
+  border: 1px solid rgba(212, 165, 116, 0.15);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.4);
+}
+
+.navigation-bar.dark-nav .contact-btn {
+  background-color: #B89B5E; /* Gold background */
+  color: #0E0C0B; /* Dark text for contrast */
+}
+
+.navigation-bar.dark-nav .contact-btn:hover {
+  background-color: #D4A574;
+  box-shadow: 0 4px 12px rgba(184, 155, 94, 0.3);
+}
