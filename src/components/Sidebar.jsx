@@ -7,7 +7,9 @@ const Sidebar = ({ filters, onFilterChange }) => {
 
   const categories = [
     { value: 'bracelet', label: 'Bracelets' },
-    { value: 'pendant', label: 'Pendants' }
+    { value: 'pendant', label: 'Pendants' },
+    { value: 'ring', label: 'Rings' },
+    { value: 'earring', label: 'Earrings' }
   ];
 
   const handleCategoryChange = (value) => {

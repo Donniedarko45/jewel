@@ -176,6 +176,8 @@ const AdminProductForm = ({ onNavigate, productId = null }) => {
                         <select id="type" name="type" value={formData.type} onChange={handleInputChange} required>
                             <option value="bracelet">Bracelet</option>
                             <option value="pendant">Pendant</option>
+                            <option value="ring">Ring</option>
+                            <option value="earring">Earring</option>
                         </select>
                     </div>
 

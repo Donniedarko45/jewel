@@ -11,11 +11,7 @@ const ProductDetailPage = ({ productId }) => {
   const [loading, setLoading] = useState(true);
   const [selectedImage, setSelectedImage] = useState(0);
   const [quantity, setQuantity] = useState(1);
-  const [activeTab, setActiveTab] = useState('description');
-  const [reviewText, setReviewText] = useState('');
-  const [reviewRating, setReviewRating] = useState(5);
-  const [reviewName, setReviewName] = useState('');
-  const [reviews, setReviews] = useState([]);
+
   const [pincode, setPincode] = useState('');
   const [deliveryMessage, setDeliveryMessage] = useState('');
   const [isZooming, setIsZooming] = useState(false);
@@ -34,7 +30,6 @@ const ProductDetailPage = ({ productId }) => {
       const response = await productApi.getById(productId);
       if (response.success) {
         setProduct(response.data);
-        setReviews(response.data.reviews || []);
       }
     } catch (err) {
       console.log('Failed to fetch product');
@@ -43,36 +38,7 @@ const ProductDetailPage = ({ productId }) => {
     }
   };
 
-  const handleSubmitReview = async (e) => {
-    e.preventDefault();
-    if (!reviewName.trim() || !reviewText.trim()) return;
 
-    const newReview = {
-      name: reviewName.trim(),
-      rating: reviewRating,
-      comment: reviewText.trim(),
-      date: new Date().toISOString()
-    };
-
-    const updatedReviews = [...reviews, newReview];
-
-    try {
-      const response = await productApi.addReview(productId, newReview);
-      if (response.success) {
-        setReviews(response.data.reviews || updatedReviews);
-      } else {
-        setReviews(updatedReviews);
-      }
-      setReviewText('');
-      setReviewName('');
-      setReviewRating(5);
-    } catch {
-      setReviews(updatedReviews);
-      setReviewText('');
-      setReviewName('');
-      setReviewRating(5);
-    }
-  };
 
   const handleMouseMove = (e) => {
     const { left, top, width, height } = e.currentTarget.getBoundingClientRect();
@@ -114,20 +80,43 @@ const ProductDetailPage = ({ productId }) => {
     setLensStyle({ display: 'none' });
   };
 
-  const handlePincodeCheck = (e) => {
+  const handlePincodeCheck = async (e) => {
     e.preventDefault();
     if (!/^\d{6}$/.test(pincode)) {
       setDeliveryMessage('❌ Invalid PIN Code. Please enter a valid 6-digit number.');
       return;
     }
 
-    const firstDigit = parseInt(pincode.charAt(0));
-    const days = (firstDigit % 3) + 2; // Dynamic estimation
-    const date = new Date();
-    date.setDate(date.getDate() + days);
-    const dateString = date.toLocaleDateString('en-IN', { weekday: 'long', month: 'short', day: 'numeric' });
+    setDeliveryMessage('⏳ Checking availability...');
 
-    setDeliveryMessage(`🚚 Delivery available! Expected by ${dateString} (${days} days) | Cash on Delivery available.`);
+    try {
+      const response = await fetch(`https://api.postalpincode.in/pincode/${pincode}`);
+      const data = await response.json();
+
+      if (data && data[0] && data[0].Status === 'Success') {
+        const postOffice = data[0].PostOffice?.[0];
+        const district = postOffice?.District || '';
+        const state = postOffice?.State || '';
+        
+        const firstDigit = parseInt(pincode.charAt(0));
+        const days = (firstDigit % 3) + 2; // Dynamic estimation
+        const date = new Date();
+        date.setDate(date.getDate() + days);
+        const dateString = date.toLocaleDateString('en-IN', { weekday: 'long', month: 'short', day: 'numeric' });
+
+        setDeliveryMessage(`🚚 Delivery available to ${district}, ${state}! Expected by ${dateString} (${days} days) | Cash on Delivery available.`);
+      } else {
+        setDeliveryMessage('❌ Delivery is not available to this PIN Code.');
+      }
+    } catch (error) {
+      console.error('Pincode API error:', error);
+      const firstDigit = parseInt(pincode.charAt(0));
+      const days = (firstDigit % 3) + 2;
+      const date = new Date();
+      date.setDate(date.getDate() + days);
+      const dateString = date.toLocaleDateString('en-IN', { weekday: 'long', month: 'short', day: 'numeric' });
+      setDeliveryMessage(`🚚 Delivery available! Expected by ${dateString} (${days} days) | Cash on Delivery available.`);
+    }
   };
 
   if (loading) {
@@ -167,9 +156,6 @@ const ProductDetailPage = ({ productId }) => {
   const displayOriginalPrice = `₹${calculatedOriginalPrice.toLocaleString('en-IN')}`;
 
   const inStock = product.inStock !== undefined ? product.inStock : (product.quantity > 0);
-  const avgRating = reviews.length > 0
-    ? (reviews.reduce((sum, r) => sum + r.rating, 0) / reviews.length).toFixed(1)
-    : null;
 
   const handleAddToCart = () => {
     addToCart(product, quantity);
@@ -230,32 +216,7 @@ const ProductDetailPage = ({ productId }) => {
 
   const specsList = getSpecs();
 
-  const renderStars = (rating, interactive = false, onChange = null) => {
-    return (
-      <div className="stars-row">
-        {[1, 2, 3, 4, 5].map(star => (
-          <svg
-            key={star}
-            viewBox="0 0 24 24"
-            width="16"
-            height="16"
-            className={`star-svg ${star <= rating ? 'filled' : ''} ${interactive ? 'interactive' : ''}`}
-            onClick={() => interactive && onChange && onChange(star)}
-            style={{
-              fill: star <= rating ? '#B89B5E' : 'none',
-              stroke: '#B89B5E',
-              strokeWidth: '1.5',
-              cursor: interactive ? 'pointer' : 'default',
-              transition: 'fill 0.15s ease, transform 0.15s ease',
-              marginRight: '2px'
-            }}
-          >
-            <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
-          </svg>
-        ))}
-      </div>
-    );
-  };
+
 
   const renderDetailedDescription = () => {
     if (!product.description) return null;
@@ -425,25 +386,7 @@ const ProductDetailPage = ({ productId }) => {
             <div className="brand-badge">DIVA & CO.</div>
             <h1 className="product-title-heading">{product.name}</h1>
 
-            {/* Ratings & Stock Status Row */}
-            <div className="ratings-status-row">
-              {avgRating ? (
-                <div className="rating-pill">
-                  <span>{avgRating}</span>
-                  <span className="star-char">★</span>
-                </div>
-              ) : (
-                <div className="rating-pill unrated">
-                  <span>New</span>
-                </div>
-              )}
-              <span className="review-pill-count">
-                {reviews.length} {reviews.length === 1 ? 'Customer Review' : 'Customer Reviews'}
-              </span>
-              <div className={`stock-status-pill ${inStock ? 'in-stock' : 'out-of-stock'}`}>
-                {inStock ? 'In Stock' : 'Out of Stock'}
-              </div>
-            </div>
+
 
             {/* Price Block */}
             <div className="price-block-card">
@@ -504,23 +447,11 @@ const ProductDetailPage = ({ productId }) => {
               </form>
               {deliveryMessage && <p className="delivery-status-note">{deliveryMessage}</p>}
               <div className="service-features-list">
-                <span>✓ 7 Days Easy Returns Placed via Chat</span>
                 <span>✓ Lifetime Quality Guarantee on Anti-Tarnish plating</span>
               </div>
             </div>
 
-            {/* Specifications Details Grid */}
-            <div className="specifications-details-card">
-              <h3>Specifications & Details</h3>
-              <div className="specs-table-grid">
-                {specsList.map((spec, index) => (
-                  <div key={index} className="specs-row-item">
-                    <span className="spec-label-name">{spec.label}</span>
-                    <span className="spec-value-detail">{spec.value}</span>
-                  </div>
-                ))}
-              </div>
-            </div>
+
 
             {/* Highlights bullet points */}
             <div className="product-highlights-box">
@@ -538,79 +469,15 @@ const ProductDetailPage = ({ productId }) => {
         {/* Bottom Tabs Section: Full Description + Review list */}
         <div className="tabs-description-reviews-section">
           <div className="details-tab-nav-bar">
-            <button
-              className={`details-tab-header-btn ${activeTab === 'description' ? 'active' : ''}`}
-              onClick={() => setActiveTab('description')}
-            >
-              Detailed Description
-            </button>
-            <button
-              className={`details-tab-header-btn ${activeTab === 'reviews' ? 'active' : ''}`}
-              onClick={() => setActiveTab('reviews')}
-            >
-              Customer Reviews ({reviews.length})
+            <button className="details-tab-header-btn active" style={{ cursor: 'default' }}>
+              Detailed Description & Specifications
             </button>
           </div>
 
           <div className="details-tab-pane-content">
-            {activeTab === 'description' && (
-              <div className="description-pane-content">
-                {renderDetailedDescription()}
-              </div>
-            )}
-
-            {activeTab === 'reviews' && (
-              <div className="reviews-pane-content">
-                {reviews.length > 0 ? (
-                  <div className="pdp-reviews-list">
-                    {reviews.map((review, idx) => (
-                      <div key={idx} className="pdp-review-card-item">
-                        <div className="pdp-review-card-header">
-                          <div className="reviewer-profile-info">
-                            <div className="reviewer-avatar-char">{review.name.charAt(0).toUpperCase()}</div>
-                            <div>
-                              <span className="reviewer-name-label">{review.name}</span>
-                              <span className="reviewer-date-stamp">{new Date(review.date).toLocaleDateString('en-IN', { year: 'numeric', month: 'short', day: 'numeric' })}</span>
-                            </div>
-                          </div>
-                          {renderStars(review.rating)}
-                        </div>
-                        <p className="pdp-reviewer-comment-text">{review.comment}</p>
-                      </div>
-                    ))}
-                  </div>
-                ) : (
-                  <p className="no-reviews-tagline">No reviews yet. Be the first to share your thoughts on this product!</p>
-                )}
-
-                <div className="write-review-pdp-form">
-                  <h3>Submit a Product Review</h3>
-                  <form onSubmit={handleSubmitReview} className="review-input-form">
-                    <div className="form-double-row-inputs">
-                      <input
-                        type="text"
-                        placeholder="Your name"
-                        value={reviewName}
-                        onChange={(e) => setReviewName(e.target.value)}
-                        required
-                      />
-                      <div className="pdp-rating-input-selector">
-                        <span>Rating:</span>
-                        {renderStars(reviewRating, true, setReviewRating)}
-                      </div>
-                    </div>
-                    <textarea
-                      placeholder="Write your detailed product experience here..."
-                      value={reviewText}
-                      onChange={(e) => setReviewText(e.target.value)}
-                      rows="4"
-                      required
-                    />
-                    <button type="submit" className="btn-pdp-submit-review">Publish Review</button>
-                  </form>
-                </div>
-              </div>
-            )}
+            <div className="description-pane-content">
+              {renderDetailedDescription()}
+            </div>
           </div>
         </div>
         <Footer />

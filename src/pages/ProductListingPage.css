@@ -9,9 +9,14 @@
   margin: 0 auto;
   padding: 2rem;
   display: grid;
-  grid-template-columns: 200px 1fr;
+  grid-template-columns: 240px 1fr;
   gap: 2rem;
   align-items: start;
+  transition: grid-template-columns 0.3s ease;
+}
+
+.listing-container.no-sidebar {
+  grid-template-columns: 1fr;
 }
 
 .listing-main {
@@ -90,12 +95,249 @@
 
 .sidebar-wrapper {
   opacity: 1;
+  transition: opacity 0.3s ease;
+}
+
+@media (min-width: 769px) {
+  .sidebar-wrapper.collapsed {
+    display: none;
+  }
+}
+
+/* Dark theme collection header */
+.collection-header-dark {
+  background-color: #0E0C0B; /* Deep rich charcoal black */
+  padding: 2.5rem 1.5rem 2rem;
+  border-radius: 12px;
+  text-align: center;
+  margin-bottom: 2rem;
+  box-shadow: var(--shadow-lg);
+  border: 1px solid rgba(212, 165, 116, 0.08);
+}
+
+.collection-header-dark h2 {
+  font-family: var(--font-heading);
+  font-size: 2.4rem;
+  color: #FFFFFF;
+  margin-bottom: 0.5rem;
+  font-weight: 400;
+  letter-spacing: 0.02em;
+}
+
+.collection-header-dark p {
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  color: #B5A89E;
+  margin-bottom: 1.8rem;
+  font-weight: 300;
+  letter-spacing: 0.05em;
+}
+
+/* Category Pills Row */
+.category-pills-row {
+  display: flex;
+  justify-content: center;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+  margin-bottom: 1.5rem;
+}
+
+.category-pill-btn {
+  background-color: transparent;
+  border: 1.5px solid #2E2724;
+  border-radius: 24px;
+  color: #D3CDC2;
+  padding: 0.5rem 1.4rem;
+  font-size: 0.82rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  letter-spacing: 0.03em;
+}
+
+.category-pill-btn:hover {
+  border-color: var(--accent-gold);
+  color: var(--accent-gold);
+}
+
+.category-pill-btn.active {
+  background: linear-gradient(135deg, #C5A880 0%, #8A6E4B 100%);
+  border-color: transparent;
+  color: #FFFFFF;
+  font-weight: 600;
+  box-shadow: 0 4px 12px rgba(138, 110, 75, 0.3);
+}
+
+/* Filter Sort Price Bar */
+.filter-sort-price-bar {
+  display: flex;
+  background-color: #161413;
+  border: 1px solid rgba(212, 165, 116, 0.15);
+  border-radius: 8px;
+  max-width: 500px;
+  margin: 0 auto;
+  overflow: hidden;
+  position: relative;
+}
+
+.bar-action-btn {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  background: transparent;
+  color: #FAF9F6;
+  border: none;
+  padding: 0.85rem 0.5rem;
+  font-size: 0.85rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border-right: 1px solid rgba(212, 165, 116, 0.15);
+  outline: none;
+}
+
+.bar-action-btn:last-child {
+  border-right: none;
+}
+
+.bar-action-btn:hover {
+  color: var(--accent-gold);
+  background-color: rgba(212, 165, 116, 0.04);
+}
+
+.bar-action-btn.active {
+  color: var(--accent-gold);
+  background-color: rgba(212, 165, 116, 0.08);
+}
+
+.bar-action-btn svg {
+  transition: transform 0.2s ease;
+}
+
+.bar-action-btn:hover svg {
+  transform: translateY(-1px);
+}
+
+.rupee-icon {
+  font-size: 0.95rem;
+  font-weight: 600;
+}
+
+/* Dropdown styling */
+.bar-dropdown-container {
+  position: relative;
+  max-width: 500px;
+  margin: 0.25rem auto 0;
+}
+
+.bar-dropdown {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  background-color: #161413;
+  border: 1px solid rgba(212, 165, 116, 0.2);
+  border-radius: 8px;
+  margin-top: 0.4rem;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+  z-index: 50;
+  padding: 1.2rem;
+  text-align: left;
+  animation: slideDownFade 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.sort-dropdown-menu {
+  padding: 0.5rem 0;
+}
+
+.sort-dropdown-menu button {
+  width: 100%;
+  display: block;
+  padding: 0.7rem 1.5rem;
+  background: transparent;
+  border: none;
+  color: #D3CDC2;
+  text-align: left;
+  font-size: 0.85rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.sort-dropdown-menu button:hover {
+  background-color: rgba(212, 165, 116, 0.08);
+  color: var(--accent-gold);
+}
+
+.sort-dropdown-menu button.active {
+  background-color: rgba(212, 165, 116, 0.12);
+  color: var(--accent-gold);
+  font-weight: 600;
+}
+
+.price-dropdown-menu h4 {
+  color: #FFFFFF;
+  font-size: 0.85rem;
+  margin-bottom: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-family: var(--font-body);
+}
+
+.price-dropdown-menu input[type="range"] {
+  width: 100%;
+  accent-color: var(--accent-gold);
+  margin-bottom: 0.6rem;
+  background: #2E2724;
+  height: 4px;
+  border-radius: 2px;
+  outline: none;
+  cursor: pointer;
+}
+
+.price-range-limits {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.78rem;
+  color: #B5A89E;
+  margin-bottom: 1rem;
+}
+
+.btn-close-dropdown {
+  width: 100%;
+  background: linear-gradient(135deg, #C5A880 0%, #8A6E4B 100%);
+  color: #FFFFFF;
+  border: none;
+  padding: 0.5rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+  border-radius: 4px;
+  cursor: pointer;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  text-align: center;
+}
+
+@keyframes slideDownFade {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 @media (max-width: 1024px) {
   .listing-container {
     grid-template-columns: 180px 1fr;
     gap: 1.5rem;
+  }
+  .listing-container.no-sidebar {
+    grid-template-columns: 1fr;
   }
 }
 
@@ -109,30 +351,7 @@
   }
   
   .filter-toggle-btn {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.4rem;
-    padding: 0.5rem 1rem;
-    background-color: #ffffff;
-    border: 1.5px solid #e0e0e0;
-    border-radius: 20px;
-    font-family: var(--font-body);
-    font-size: 0.8rem;
-    font-weight: 600;
-    color: var(--text-primary);
-    cursor: pointer;
-    transition: all var(--transition-fast);
-  }
-
-  .filter-toggle-btn:hover {
-    border-color: var(--accent-gold);
-    color: var(--accent-gold);
-  }
-
-  .filter-toggle-btn.active {
-    background-color: var(--accent-cta);
-    color: #ffffff;
-    border-color: var(--accent-cta);
+    display: none;
   }
 
   .sidebar-wrapper {
