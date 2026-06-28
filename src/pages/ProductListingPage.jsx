@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import NavigationBar from '../components/NavigationBar';
 import Footer from '../components/Footer';
-import Sidebar from '../components/Sidebar';
 import ProductGrid from '../components/ProductGrid';
 import { productApi } from '../services/api.js';
 import './ProductListingPage.css';
@@ -12,11 +11,12 @@ const ProductListingPage = () => {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [categoryFilter, setCategoryFilter] = useState('all');
-  const [sidebarFilters, setSidebarFilters] = useState({ categories: [], priceRange: 10000 });
+  const [priceRange, setPriceRange] = useState(25000); // Increased max range for luxury items
   const [showMobileFilters, setShowMobileFilters] = useState(false);
   const [sortOption, setSortOption] = useState('default');
   const [showSortDropdown, setShowSortDropdown] = useState(false);
   const [showPriceDropdown, setShowPriceDropdown] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
 
   useEffect(() => {
     fetchProducts();
@@ -25,8 +25,17 @@ const ProductListingPage = () => {
       setShowSortDropdown(false);
       setShowPriceDropdown(false);
     };
+    
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 300);
+    };
+
     window.addEventListener('click', handleOutsideClick);
-    return () => window.removeEventListener('click', handleOutsideClick);
+    window.addEventListener('scroll', handleScroll);
+    return () => {
+      window.removeEventListener('click', handleOutsideClick);
+      window.removeEventListener('scroll', handleScroll);
+    };
   }, []);
 
   const fetchProducts = async () => {
@@ -50,16 +59,13 @@ const ProductListingPage = () => {
     } catch (err) {
       console.log('Failed to fetch products');
     } finally {
-      setLoading(false);
+      // Small timeout for smooth staggered entrance effect
+      setTimeout(() => setLoading(false), 400);
     }
   };
 
   const handleProductClick = (product) => {
     navigate(`/product/${product.id || product._id}`);
-  };
-
-  const handleSidebarFilter = (filters) => {
-    setSidebarFilters(filters);
   };
 
   // Apply all filters
@@ -70,15 +76,10 @@ const ProductListingPage = () => {
     filteredProducts = filteredProducts.filter(p => p.type === categoryFilter);
   }
 
-  // Sidebar category filter
-  if (sidebarFilters.categories.length > 0) {
-    filteredProducts = filteredProducts.filter(p => sidebarFilters.categories.includes(p.type));
-  }
-
   // Price filter
   filteredProducts = filteredProducts.filter(p => {
     const price = p.numericPrice || p.price;
-    return typeof price === 'number' ? price <= sidebarFilters.priceRange : true;
+    return typeof price === 'number' ? price <= priceRange : true;
   });
 
   // Sort
@@ -88,113 +89,159 @@ const ProductListingPage = () => {
     filteredProducts.sort((a, b) => b.numericPrice - a.numericPrice);
   }
 
+  const categoryTitles = {
+    'all': 'The Complete Collection',
+    'bracelet': 'Exquisite Bracelets',
+    'pendant': 'Signature Pendants',
+    'ring': 'Elegance Rings',
+    'earring': 'Radiant Earrings'
+  };
+
+  const categoryDescriptions = {
+    'all': 'Discover our masterpieces crafted with exceptional artistry and timeless beauty.',
+    'bracelet': 'Adorn your wrists with meticulously designed bracelets that captivate.',
+    'pendant': 'Necklaces and pendants that lay perfectly close to your heart.',
+    'ring': 'Symbolic rings combining brilliant cut gems with precious metals.',
+    'earring': 'Frames of light to illuminate your face with every movement.'
+  };
+
   return (
     <div className="product-listing-page">
       <NavigationBar />
-      <div className={`listing-container ${showMobileFilters ? '' : 'no-sidebar'}`}>
-        <div className={`sidebar-wrapper ${showMobileFilters ? 'show' : 'collapsed'}`}>
-          <Sidebar filters={sidebarFilters} onFilterChange={handleSidebarFilter} />
-        </div>
-        <main className="listing-main">
-          <div className="collection-header-dark" onClick={(e) => e.stopPropagation()}>
-            <h2>Jewelry Collection</h2>
-            <p>Discover timeless elegance</p>
+      
+      {/* Removed Hero Section */}
 
-            <div className="category-pills-row">
-              <button className={`category-pill-btn ${categoryFilter === 'all' ? 'active' : ''}`} onClick={() => setCategoryFilter('all')}>All</button>
-              <button className={`category-pill-btn ${categoryFilter === 'bracelet' ? 'active' : ''}`} onClick={() => setCategoryFilter('bracelet')}>Bracelets</button>
-              <button className={`category-pill-btn ${categoryFilter === 'pendant' ? 'active' : ''}`} onClick={() => setCategoryFilter('pendant')}>Pendants</button>
-              <button className={`category-pill-btn ${categoryFilter === 'ring' ? 'active' : ''}`} onClick={() => setCategoryFilter('ring')}>Rings</button>
-              <button className={`category-pill-btn ${categoryFilter === 'earring' ? 'active' : ''}`} onClick={() => setCategoryFilter('earring')}>Earrings</button>
+      <div className="listing-container">
+        {/* Sticky Control Bar */}
+        <div className={`collection-controls ${isScrolled ? 'is-sticky' : ''}`}>
+          <div className="controls-inner">
+            
+            {/* Category Navigation - Desktop & Tablet */}
+            <div className="category-nav">
+              {['all', 'ring', 'earring', 'pendant', 'bracelet'].map(cat => (
+                <button 
+                  key={cat}
+                  className={`cat-nav-btn ${categoryFilter === cat ? 'active' : ''}`} 
+                  onClick={() => setCategoryFilter(cat)}
+                >
+                  {cat.charAt(0).toUpperCase() + cat.slice(1)}
+                  {categoryFilter === cat && <span className="active-dot"></span>}
+                </button>
+              ))}
             </div>
 
-            <div className="filter-sort-price-bar">
-              <button 
-                className={`bar-action-btn ${showMobileFilters ? 'active' : ''}`}
-                onClick={(e) => { e.stopPropagation(); setShowMobileFilters(!showMobileFilters); setShowSortDropdown(false); setShowPriceDropdown(false); }}
+            {/* Mobile Category Select */}
+            <div className="mobile-category-nav">
+              <select 
+                value={categoryFilter}
+                onChange={(e) => setCategoryFilter(e.target.value)}
+                className="mobile-cat-select"
               >
-                <svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" strokeWidth="1.5" fill="none">
-                  <line x1="4" y1="21" x2="4" y2="14" /><line x1="4" y1="10" x2="4" y2="3" />
-                  <line x1="12" y1="21" x2="12" y2="12" /><line x1="12" y1="8" x2="12" y2="3" />
-                  <line x1="20" y1="21" x2="20" y2="16" /><line x1="20" y1="12" x2="20" y2="3" />
-                  <line x1="2" y1="14" x2="6" y2="14" />
-                  <line x1="10" y1="8" x2="14" y2="8" />
-                  <line x1="18" y1="16" x2="22" y2="16" />
-                </svg>
-                <span>Filter</span>
-              </button>
-
-              <button 
-                className={`bar-action-btn ${showSortDropdown ? 'active' : ''}`}
-                onClick={(e) => { e.stopPropagation(); setShowSortDropdown(!showSortDropdown); setShowPriceDropdown(false); }}
-              >
-                <svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" strokeWidth="1.5" fill="none">
-                  <line x1="12" y1="5" x2="12" y2="19" />
-                  <polyline points="19 12 12 19 5 12" />
-                  <line x1="8" y1="5" x2="16" y2="5" />
-                </svg>
-                <span>Sort {sortOption !== 'default' && `(${sortOption === 'low-to-high' ? 'Low-High' : 'High-Low'})`}</span>
-              </button>
-
-              <button 
-                className={`bar-action-btn ${showPriceDropdown ? 'active' : ''}`}
-                onClick={(e) => { e.stopPropagation(); setShowPriceDropdown(!showPriceDropdown); setShowSortDropdown(false); }}
-              >
-                <span className="rupee-icon">₹</span>
-                <span>Price</span>
-                <svg viewBox="0 0 24 24" width="14" height="14" stroke="currentColor" strokeWidth="2" fill="none">
-                  <polyline points="6 9 12 15 18 9" />
-                </svg>
-              </button>
+                <option value="all">All Categories</option>
+                <option value="ring">Rings</option>
+                <option value="earring">Earrings</option>
+                <option value="pendant">Pendants</option>
+                <option value="bracelet">Bracelets</option>
+              </select>
             </div>
 
-            <div className="bar-dropdown-container">
-              {showPriceDropdown && (
-                <div className="bar-dropdown price-dropdown-menu" onClick={(e) => e.stopPropagation()}>
-                  <h4>Filter by Price</h4>
-                  <input 
-                    type="range" 
-                    min="0" 
-                    max="10000" 
-                    step="100"
-                    value={sidebarFilters.priceRange} 
-                    onChange={(e) => setSidebarFilters(prev => ({ ...prev, priceRange: parseInt(e.target.value) }))}
-                  />
-                  <div className="price-range-limits">
-                    <span>₹0</span>
-                    <span>Max: ₹{sidebarFilters.priceRange.toLocaleString('en-IN')}</span>
+            {/* Actions (Filter / Sort) */}
+            <div className="control-actions">
+              <div className="action-dropdown-wrapper">
+                <button 
+                  className={`action-btn ${showPriceDropdown ? 'active' : ''}`}
+                  onClick={(e) => { e.stopPropagation(); setShowPriceDropdown(!showPriceDropdown); setShowSortDropdown(false); }}
+                >
+                  <span>Filter by Price</span>
+                  <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" strokeWidth="1.5" fill="none">
+                    <polyline points="6 9 12 15 18 9" />
+                  </svg>
+                </button>
+                
+                {showPriceDropdown && (
+                  <div className="dropdown-panel price-panel fade-in-down" onClick={(e) => e.stopPropagation()}>
+                    <div className="panel-header">
+                      <h4>Price Range</h4>
+                      <span className="current-range">Up to ₹{priceRange.toLocaleString('en-IN')}</span>
+                    </div>
+                    <div className="range-slider-container">
+                      <input 
+                        type="range" 
+                        min="500" 
+                        max="25000" 
+                        step="500"
+                        value={priceRange} 
+                        onChange={(e) => setPriceRange(parseInt(e.target.value))}
+                        className="luxury-range"
+                      />
+                      <div className="range-track" style={{ width: `${(priceRange / 25000) * 100}%` }}></div>
+                    </div>
+                    <div className="range-labels">
+                      <span>₹500</span>
+                      <span>₹25,000+</span>
+                    </div>
                   </div>
-                  <button className="btn-close-dropdown" onClick={() => setShowPriceDropdown(false)}>Apply</button>
-                </div>
-              )}
+                )}
+              </div>
 
-              {showSortDropdown && (
-                <div className="bar-dropdown sort-dropdown-menu" onClick={(e) => e.stopPropagation()}>
-                  <button className={sortOption === 'default' ? 'active' : ''} onClick={() => { setSortOption('default'); setShowSortDropdown(false); }}>Default</button>
-                  <button className={sortOption === 'low-to-high' ? 'active' : ''} onClick={() => { setSortOption('low-to-high'); setShowSortDropdown(false); }}>Price: Low to High</button>
-                  <button className={sortOption === 'high-to-low' ? 'active' : ''} onClick={() => { setSortOption('high-to-low'); setShowSortDropdown(false); }}>Price: High to Low</button>
-                </div>
-              )}
+              <div className="action-dropdown-wrapper">
+                <button 
+                  className={`action-btn ${showSortDropdown ? 'active' : ''}`}
+                  onClick={(e) => { e.stopPropagation(); setShowSortDropdown(!showSortDropdown); setShowPriceDropdown(false); }}
+                >
+                  <span>Sort By</span>
+                  <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" strokeWidth="1.5" fill="none">
+                    <line x1="12" y1="5" x2="12" y2="19" />
+                    <polyline points="19 12 12 19 5 12" />
+                    <line x1="8" y1="5" x2="16" y2="5" />
+                  </svg>
+                </button>
+                
+                {showSortDropdown && (
+                  <div className="dropdown-panel sort-panel fade-in-down" onClick={(e) => e.stopPropagation()}>
+                    <button className={sortOption === 'default' ? 'active' : ''} onClick={() => { setSortOption('default'); setShowSortDropdown(false); }}>
+                      Recommended
+                    </button>
+                    <button className={sortOption === 'low-to-high' ? 'active' : ''} onClick={() => { setSortOption('low-to-high'); setShowSortDropdown(false); }}>
+                      Price: Low to High
+                    </button>
+                    <button className={sortOption === 'high-to-low' ? 'active' : ''} onClick={() => { setSortOption('high-to-low'); setShowSortDropdown(false); }}>
+                      Price: High to Low
+                    </button>
+                  </div>
+                )}
+              </div>
             </div>
+            
           </div>
+        </div>
 
+        <main className="listing-main">
           {loading ? (
             <div className="skeleton-grid">
               {[...Array(6)].map((_, idx) => (
-                <div key={idx} className="skeleton-card">
+                <div key={idx} className="skeleton-card" style={{animationDelay: `${idx * 0.1}s`}}>
                   <div className="skeleton-image shimmer"></div>
                   <div className="skeleton-body">
                     <div className="skeleton-title shimmer"></div>
                     <div className="skeleton-price shimmer"></div>
-                    <div className="skeleton-button shimmer"></div>
                   </div>
                 </div>
               ))}
             </div>
           ) : filteredProducts.length === 0 ? (
-            <div className="loading-state">No products found</div>
+            <div className="empty-state fade-in-up">
+              <div className="empty-icon">✧</div>
+              <h3>No Creations Found</h3>
+              <p>We couldn't find any pieces matching your current filters.</p>
+              <button className="reset-btn" onClick={() => { setCategoryFilter('all'); setPriceRange(25000); }}>
+                Clear Filters
+              </button>
+            </div>
           ) : (
-            <ProductGrid products={filteredProducts} onProductClick={handleProductClick} />
+            <div className="products-layout fade-in-up">
+              <ProductGrid products={filteredProducts} onProductClick={handleProductClick} />
+            </div>
           )}
         </main>
       </div>
@@ -204,3 +251,4 @@ const ProductListingPage = () => {
 };
 
 export default ProductListingPage;
+
