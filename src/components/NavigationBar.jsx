@@ -9,7 +9,6 @@ const NavigationBar = ({ showLogo = true }) => {
   const currentPath = location.pathname;
   const { cartCount, setIsCartOpen } = useCart();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const isDarkPage = currentPath === '/products' || currentPath.startsWith('/product/');
   const [animateBadge, setAnimateBadge] = useState(false);
 
   useEffect(() => {
@@ -50,7 +49,7 @@ const NavigationBar = ({ showLogo = true }) => {
   };
 
   return (
-    <nav className={`navigation-bar ${currentPath === '/' ? 'home-nav' : isDarkPage ? 'dark-nav' : 'inner-nav'}`}>
+    <nav className="navigation-bar inner-nav">
       <div className="nav-container">
         {showLogo ? (
           <div className="nav-logo">

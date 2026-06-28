@@ -1,11 +1,11 @@
 .sidebar {
-  background: #161413; /* Nested dark card background */
+  background: #FFFFFF; /* Nested light card background */
   padding: 1.25rem;
   border-radius: 8px;
-  border: 1px solid rgba(212, 165, 116, 0.15); /* Refined gold border */
+  border: 1px solid var(--border-light); /* Refined border */
   position: sticky;
   top: 96px;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 4px 15px rgba(26, 26, 26, 0.04);
 }
 
 .sidebar-title {
@@ -13,7 +13,7 @@
   font-size: 1.6rem;
   font-weight: 500;
   margin: 0 0 1.25rem;
-  color: #FFFFFF;
+  color: var(--text-primary);
   position: relative;
   padding-bottom: 0.6rem;
 }
@@ -28,7 +28,7 @@
 .filter-section {
   margin-bottom: 1.25rem;
   padding-bottom: 1.25rem;
-  border-bottom: 1px solid rgba(212, 165, 116, 0.1);
+  border-bottom: 1px solid var(--border-light);
 }
 .filter-section:last-child {
   border-bottom: none;
@@ -39,7 +39,7 @@
 .filter-header {
   font-size: 0.9rem;
   font-weight: 600;
-  color: #D3CDC2;
+  color: var(--text-secondary);
   margin-bottom: 0.75rem;
   letter-spacing: 0.05em;
   text-transform: uppercase;
@@ -57,11 +57,11 @@
   gap: 0.6rem;
   cursor: pointer;
   font-size: 0.88rem;
-  color: #B5A89E;
+  color: var(--text-secondary);
   padding: 0.2rem 0;
   transition: color 0.2s;
 }
-.filter-option:hover { color: #FFFFFF; }
+.filter-option:hover { color: var(--text-primary); }
 
 .filter-option input[type="checkbox"] {
   width: 16px; height: 16px;
@@ -75,7 +75,7 @@
 .price-slider input[type="range"] {
   width: 100%;
   height: 4px;
-  background: #2E2724;
+  background: var(--border-light);
   border-radius: 2px;
   outline: none;
   -webkit-appearance: none;
@@ -85,25 +85,25 @@
   -webkit-appearance: none;
   width: 16px; height: 16px;
   background: #B89B5E;
-  border: 2px solid #161413;
+  border: 2px solid #FFFFFF;
   border-radius: 50%;
   cursor: pointer;
-  box-shadow: 0 1px 4px rgba(0,0,0,0.3);
+  box-shadow: 0 1px 4px rgba(0,0,0,0.15);
 }
 .price-slider input[type="range"]::-moz-range-thumb {
   width: 16px; height: 16px;
   background: #B89B5E;
-  border: 2px solid #161413;
+  border: 2px solid #FFFFFF;
   border-radius: 50%;
   cursor: pointer;
-  box-shadow: 0 1px 4px rgba(0,0,0,0.3);
+  box-shadow: 0 1px 4px rgba(0,0,0,0.15);
 }
 .price-labels {
   display: flex;
   justify-content: space-between;
   margin-top: 0.5rem;
   font-size: 0.85rem;
-  color: #FFFFFF;
+  color: var(--text-primary);
   font-weight: 600;
 }
 
@@ -111,6 +111,6 @@
   .sidebar {
     position: static;
     padding: 1.25rem;
-    background: #161413;
+    background: #FFFFFF;
   }
 }

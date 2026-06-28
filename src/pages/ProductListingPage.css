@@ -1,6 +1,6 @@
 .product-listing-page {
   min-height: 100vh;
-  background-color: #0A0908; /* Deep rich charcoal black */
+  background-color: var(--primary-bg); /* Warm elegant ivory background */
   padding-top: 80px;
 }
 
@@ -37,7 +37,7 @@
 .listing-header h1 {
   font-family: 'Cormorant Garamond', serif;
   font-size: 2rem;
-  color: #FFFFFF;
+  color: var(--text-primary);
   margin: 0;
   font-weight: 500;
   font-style: italic;
@@ -45,7 +45,7 @@
 
 .product-count {
   font-size: 0.9rem;
-  color: #B5A89E;
+  color: var(--text-secondary);
   margin: 0;
 }
 
@@ -57,12 +57,12 @@
 
 .category-tab {
   padding: 0.55rem 1.25rem;
-  background: #161413;
-  border: 1.5px solid rgba(212, 165, 116, 0.15);
+  background: #FFFFFF;
+  border: 1.5px solid var(--border-light);
   border-radius: 24px;
   font-size: 0.85rem;
   font-weight: 500;
-  color: #D3CDC2;
+  color: var(--text-secondary);
   cursor: pointer;
   transition: all 0.25s;
 }
@@ -79,7 +79,7 @@
 .loading-state {
   text-align: center;
   padding: 3rem;
-  color: #B5A89E;
+  color: var(--text-muted);
   font-size: 0.95rem;
 }
 
@@ -104,9 +104,9 @@
   }
 }
 
-/* Dark theme collection header */
+/* Light theme collection header */
 .collection-header-dark {
-  background-color: transparent; /* Seamless transparent header */
+  background-color: transparent;
   padding: 1.5rem 0 1.2rem;
   text-align: center;
   margin-bottom: 1.5rem;
@@ -115,7 +115,7 @@
 .collection-header-dark h2 {
   font-family: var(--font-heading);
   font-size: 2.6rem;
-  color: #FFFFFF;
+  color: var(--text-primary);
   margin-bottom: 0.4rem;
   font-weight: 400;
   letter-spacing: 0.04em;
@@ -124,7 +124,7 @@
 .collection-header-dark p {
   font-family: var(--font-body);
   font-size: 0.95rem;
-  color: #B5A89E;
+  color: var(--text-muted);
   margin-bottom: 1.5rem;
   font-weight: 300;
   letter-spacing: 0.08em;
@@ -141,10 +141,10 @@
 }
 
 .category-pill-btn {
-  background-color: transparent;
-  border: 1.5px solid #2E2724;
+  background-color: #FFFFFF;
+  border: 1.5px solid var(--border-light);
   border-radius: 24px;
-  color: #D3CDC2;
+  color: var(--text-secondary);
   padding: 0.5rem 1.4rem;
   font-size: 0.82rem;
   font-weight: 500;
@@ -156,6 +156,7 @@
 .category-pill-btn:hover {
   border-color: var(--accent-gold);
   color: var(--accent-gold);
+  background-color: #FFFFFF;
 }
 
 .category-pill-btn.active {
@@ -169,14 +170,14 @@
 /* Filter Sort Price Bar */
 .filter-sort-price-bar {
   display: flex;
-  background-color: #161413;
-  border: 1px solid rgba(212, 165, 116, 0.2);
+  background-color: #FFFFFF;
+  border: 1px solid var(--border-light);
   border-radius: 8px;
   max-width: 500px;
   margin: 0 auto;
   overflow: hidden;
   position: relative;
-  box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+  box-shadow: 0 4px 15px rgba(26, 26, 26, 0.04);
 }
 
 .bar-action-btn {
@@ -186,14 +187,14 @@
   justify-content: center;
   gap: 0.5rem;
   background: transparent;
-  color: #FAF9F6;
+  color: var(--text-primary);
   border: none;
   padding: 0.85rem 0.5rem;
   font-size: 0.85rem;
   font-weight: 500;
   cursor: pointer;
   transition: all 0.2s ease;
-  border-right: 1px solid rgba(212, 165, 116, 0.2);
+  border-right: 1px solid var(--border-light);
   outline: none;
 }
 
@@ -236,11 +237,11 @@
   top: 100%;
   left: 0;
   width: 100%;
-  background-color: #161413;
-  border: 1px solid rgba(212, 165, 116, 0.2);
+  background-color: #FFFFFF;
+  border: 1px solid var(--border-light);
   border-radius: 8px;
   margin-top: 0.4rem;
-  box-shadow: 0 12px 30px rgba(0,0,0,0.6);
+  box-shadow: 0 12px 30px rgba(26, 26, 26, 0.08);
   z-index: 50;
   padding: 1.2rem;
   text-align: left;
@@ -257,7 +258,7 @@
   padding: 0.7rem 1.5rem;
   background: transparent;
   border: none;
-  color: #D3CDC2;
+  color: var(--text-secondary);
   text-align: left;
   font-size: 0.85rem;
   font-weight: 500;
@@ -277,7 +278,7 @@
 }
 
 .price-dropdown-menu h4 {
-  color: #FFFFFF;
+  color: var(--text-primary);
   font-size: 0.85rem;
   margin-bottom: 0.8rem;
   text-transform: uppercase;
@@ -289,7 +290,7 @@
   width: 100%;
   accent-color: var(--accent-gold);
   margin-bottom: 0.6rem;
-  background: #2E2724;
+  background: var(--border-light);
   height: 4px;
   border-radius: 2px;
   outline: none;
@@ -300,7 +301,7 @@
   display: flex;
   justify-content: space-between;
   font-size: 0.78rem;
-  color: #B5A89E;
+  color: var(--text-secondary);
   margin-bottom: 1rem;
 }
 
@@ -377,15 +378,15 @@
 }
 
 .skeleton-card {
-  background: #161413;
+  background: #FFFFFF;
   border-radius: 4px;
   overflow: hidden;
-  border: 1px solid rgba(212, 165, 116, 0.15);
+  border: 1px solid var(--border-light);
 }
 
 .skeleton-image {
   aspect-ratio: 1/1;
-  background: #2E2724;
+  background: #E5DDD5;
 }
 
 .skeleton-body {
@@ -399,27 +400,27 @@
 .skeleton-title {
   height: 1.2rem;
   width: 80%;
-  background: #2E2724;
+  background: #E5DDD5;
   border-radius: 2px;
 }
 
 .skeleton-price {
   height: 1rem;
   width: 40%;
-  background: #2E2724;
+  background: #E5DDD5;
   border-radius: 2px;
 }
 
 .skeleton-button {
   height: 2.2rem;
   width: 100%;
-  background: #2E2724;
+  background: #E5DDD5;
   border-radius: 3px;
   margin-top: 0.2rem;
 }
 
 .shimmer {
-  background: linear-gradient(90deg, #161413 25%, #2E2724 50%, #161413 75%);
+  background: linear-gradient(90deg, #FFFFFF 25%, #E5DDD5 50%, #FFFFFF 75%);
   background-size: 200% 100%;
   animation: shimmer-load 1.5s infinite linear;
 }

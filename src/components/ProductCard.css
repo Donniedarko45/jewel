@@ -1,24 +1,24 @@
 .pcard {
-  background: #161413; /* Dark card background */
-  border: 1px solid rgba(212, 165, 116, 0.15); /* Refined gold border */
+  background: #FFFFFF; /* Light card background */
+  border: 1px solid var(--border-light); /* Refined light border */
   border-radius: 6px;
   overflow: hidden;
   cursor: pointer;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 4px 15px rgba(26, 26, 26, 0.04);
 }
 
 .pcard:hover {
-  box-shadow: 0 8px 30px rgba(184, 155, 94, 0.18); /* Soft gold glow */
+  box-shadow: 0 8px 30px rgba(184, 155, 94, 0.08); /* Soft gold glow */
   transform: translateY(-4px);
-  border-color: rgba(212, 165, 116, 0.4);
+  border-color: rgba(212, 165, 116, 0.3);
 }
 
 .pcard-img {
   position: relative;
   aspect-ratio: 1/1;
   overflow: hidden;
-  background: #0E0C0B;
+  background: var(--primary-bg);
 }
 
 .pcard-img img {
@@ -44,7 +44,7 @@
   border-radius: 2px;
   text-transform: uppercase;
   letter-spacing: 0.08em;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
 }
 
 .pcard-body {
@@ -53,14 +53,14 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  background-color: #161413;
+  background-color: #FFFFFF;
 }
 
 .pcard-name {
   font-family: 'Cormorant Garamond', serif;
   font-size: 1.15rem;
   font-weight: 400;
-  color: #FFFFFF;
+  color: var(--text-primary);
   margin: 0 0 0.4rem;
   line-height: 1.3;
   display: -webkit-box;
