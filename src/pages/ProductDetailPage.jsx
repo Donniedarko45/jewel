@@ -4,11 +4,13 @@ import NavigationBar from '../components/NavigationBar';
 import Footer from '../components/Footer';
 import { useCart } from '../context/CartContext';
 import { productApi } from '../services/api.js';
+import ProductGrid from '../components/ProductGrid';
 import './ProductDetailPage.css';
 
 const ProductDetailPage = ({ productId }) => {
   const [product, setProduct] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [similarProducts, setSimilarProducts] = useState([]);
   const [selectedImage, setSelectedImage] = useState(0);
   const [quantity, setQuantity] = useState(1);
 
@@ -30,6 +32,30 @@ const ProductDetailPage = ({ productId }) => {
       const response = await productApi.getById(productId);
       if (response.success) {
         setProduct(response.data);
+        
+        // Fetch similar products
+        try {
+          const similarRes = await productApi.getAll(response.data.type);
+          if (similarRes.success) {
+            // Filter out current product and transform for ProductGrid
+            const filtered = similarRes.data
+              .filter(p => p._id !== productId)
+              .slice(0, 4) // Show up to 4 similar products
+              .map(p => ({
+                id: p._id,
+                title: p.name,
+                price: `₹${p.price.toLocaleString('en-IN')}`,
+                numericPrice: p.price,
+                type: p.type,
+                image: p.images?.[0]?.url || 'https://via.placeholder.com/500',
+                secondaryImage: p.images?.[1]?.url || p.images?.[0]?.url,
+                ...p
+              }));
+            setSimilarProducts(filtered);
+          }
+        } catch (err) {
+          console.log('Failed to fetch similar products');
+        }
       }
     } catch (err) {
       console.log('Failed to fetch product');
@@ -314,21 +340,15 @@ const ProductDetailPage = ({ productId }) => {
       };
 
       return (
-        <div className="premium-desc-container">
-          <div className="premium-desc-header">
-            <h3>Craftsmanship & Specifications</h3>
-            <p>Every piece at DIVA & Co. is designed with high precision, balancing timeless luxury with everyday longevity.</p>
-          </div>
-          <div className="premium-desc-grid">
+        <div className="editorial-desc-container">
+          <div className="editorial-desc-list">
             {keyValueLines.map((line, index) => (
-              <div key={index} className="premium-desc-card">
-                <div className="premium-desc-icon-box">
+              <div key={index} className="editorial-desc-row">
+                <div className="editorial-desc-key">
                   {getIcon(line.key)}
+                  <span>{line.key}</span>
                 </div>
-                <div className="premium-desc-info">
-                  <span className="premium-desc-key">{line.key}</span>
-                  <span className="premium-desc-val">{line.value}</span>
-                </div>
+                <div className="editorial-desc-val">{line.value}</div>
               </div>
             ))}
           </div>
@@ -530,6 +550,17 @@ const ProductDetailPage = ({ productId }) => {
             </div>
           </div>
         </div>
+
+        {/* Similar Products Section */}
+        {similarProducts.length > 0 && (
+          <div className="similar-products-section">
+            <h2 className="similar-products-heading">You May Also Like</h2>
+            <div className="similar-products-grid">
+              <ProductGrid products={similarProducts} onProductClick={(p) => window.location.href = `/product/${p.id || p._id}`} />
+            </div>
+          </div>
+        )}
+
       </div>
       <Footer />
     </div>
